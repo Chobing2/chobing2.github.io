@@ -1,3 +1,32 @@
+function syncPlayerTableHeight(){
+  const leftCard = document.querySelector('.grid > .card:first-child');
+  const rightCard = document.querySelector('.grid > .card:last-child');
+  const wrap = document.querySelector('.playerTableWrap');
+  if(!leftCard || !rightCard || !wrap) return;
+
+  // 모바일/1열 레이아웃에서는 카드 높이에 맞추지 않고 기본 동작 유지
+  if(window.innerWidth <= 980){
+    wrap.style.maxHeight = '';
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    const leftRect = leftCard.getBoundingClientRect();
+    const cardRect = rightCard.getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
+
+    // 왼쪽 카드 높이를 기준으로, 오른쪽 카드 안에서 테이블이 차지할 수 있는 높이를 계산
+    const paddingBottom = 14; // .card padding과 살짝 여유
+    let available = leftRect.height - (wrapRect.top - cardRect.top) - paddingBottom;
+
+    // 너무 작아지는 것만 막고, 줄어드는 방향은 그대로 반영
+    const minH = 140;
+    if(available < minH) available = minH;
+
+    wrap.style.maxHeight = `${available}px`;
+  });
+}
+
 function render(){
   const sel = document.getElementById('batchCount');
   if(!sel.dataset.ready){
@@ -42,6 +71,9 @@ function render(){
 
   const isOpen = document.getElementById('matchOptBack')?.classList.contains('open');
   if(isOpen) renderGenderInfoInModal();
+
+  // 코트+/코트- 등으로 카드 높이가 달라졌을 때, 카드 높이에 맞춰 사용자 테이블 높이 조정
+  syncPlayerTableHeight();
 }
 
 function renderCourts(){
@@ -186,5 +218,6 @@ function renderFinished(){
 }
 
 // init
+window.addEventListener('resize', syncPlayerTableHeight);
 render();
 

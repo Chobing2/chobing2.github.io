@@ -109,6 +109,15 @@ th{color:#0b1220}
 td{color:var(--txt)}
 .center{text-align:center}
 
+.playerTableWrap{
+  margin-top:10px;
+  overflow-x:auto;
+  overflow-y:auto;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.96);
+}
+
 .drawer{
   position:fixed;right:16px;bottom:16px;width:min(520px,calc(100% - 32px));
   max-height:70vh;overflow:auto;border-radius:16px;
