@@ -140,13 +140,25 @@ function renderPlayers(){
   const tb=document.getElementById('playerTbody');
   tb.innerHTML='';
 
+  const searchInput = document.getElementById('playerSearch');
+  if(searchInput && searchInput.dataset.bound!=='1'){
+    searchInput.addEventListener('input', renderPlayers);
+    searchInput.dataset.bound = '1';
+  }
+
+  const query = (searchInput?.value || '').trim().toLowerCase();
+
   const sorted = players.slice().sort((a,b)=>{
     const r = a.name.localeCompare(b.name,'ko');
     if(r!==0) return r;
     return a.id - b.id;
   });
 
-  sorted.forEach(p=>{
+  const filtered = query
+    ? sorted.filter(p => String(p.name||'').toLowerCase().includes(query))
+    : sorted;
+
+  filtered.forEach(p=>{
     const tr=document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${p.name}</strong> ${(!p.isLate && p.lateJoiner) ? `<span class="miniTag">합류</span>` : ``}</td>
