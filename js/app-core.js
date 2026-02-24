@@ -1564,6 +1564,10 @@ function openAddPlayerModal(){
 }
 function closeAddPlayerModal(){
   document.getElementById('addPlayerBack').classList.remove('open');
+  document.getElementById('apName').value = '';
+  document.getElementById('apGender').value = '남';
+  document.getElementById('apLevel').value = 'E';
+  document.getElementById('apGames').value = '0';
 }
 function addPlayerFromModal(){
   const name = document.getElementById('apName').value.trim();
