@@ -1549,6 +1549,7 @@ function removeCourt(){
     return;
   }
   const removed = courts.pop();
+  nextCourtId = removed;
   games = games.filter(g=>!(g.status==='playing' && g.courtId===removed));
   rebuildStartSequenceFromGames();
   render();
