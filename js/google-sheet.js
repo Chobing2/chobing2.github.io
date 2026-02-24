@@ -1,6 +1,15 @@
 // ✅ 여기에 본인 웹앱 URL/키 입력
 const GOOGLE_SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwmPJbU8J4Cou0f41pTmn1y6gafcc-E2PT8sa7rX1XteeaA9o2LpC2ffzSk9qCJ7MkZ/exec';
 const GOOGLE_SHEET_SECRET_KEY = 'qjxlzjfcnfcorvy2dnjfqnxjtlwkr';
+const GOOGLE_SHEET_EDIT_URL = 'https://docs.google.com/spreadsheets/d/1nTQdEsl0COQyjXGBWHMhOHDKyLSqbJqtN9lNzSDB4F4/edit?usp=sharing';
+
+function openGoogleSheetEditUrl(){
+  if(!GOOGLE_SHEET_EDIT_URL){
+    alert('구글 시트 편집 URL이 설정되어 있지 않습니다.');
+    return;
+  }
+  window.open(GOOGLE_SHEET_EDIT_URL, '_blank');
+}
 
 function ymdLocal(){
   const d = new Date();
