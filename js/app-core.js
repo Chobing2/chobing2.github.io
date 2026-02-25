@@ -1535,8 +1535,8 @@ function saveMatchOptions(){
 // Courts
 // ----------------------------
 function addCourt(){
-  if(courts.length>=4){
-    alert('코트는 최대 4개까지 가능합니다.');
+  if(courts.length>=5){
+    alert('코트는 최대 5개까지 가능합니다.');
     return;
   }
   courts.push(nextCourtId++);
