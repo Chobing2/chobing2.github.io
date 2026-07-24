@@ -1052,14 +1052,22 @@ function getLastGames(name, count = 5) {
     return games;
 }
 
-function showPlayerGames(name) {
-    const games = getLastGames(name, 5);
-    $('#playerGamesTitle').textContent = `${name} · 최근 게임`;
+function playerChip(p, name) {
+    const genderCls = p.gender === '남' ? 'male' : 'female';
+    return `<span class="log-player ${genderCls}${p.name===name?' me':''}">
+        <span class="log-player-lv lv-${p.level}">${p.level}</span>
+        ${p.name}
+    </span>`;
+}
+
+function showPlayerGames(name, idx) {
+    const g = getLastGames(name, 5)[idx];
+    $('#playerGamesTitle').textContent = `${name} · 게임 상세`;
     const list = $('#playerGamesList');
-    if (!games.length) {
-        list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--txt3)">아직 게임 기록이 없습니다</div>';
+    if (!g) {
+        list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--txt3)">게임 기록을 찾을 수 없습니다</div>';
     } else {
-        list.innerHTML = games.map(g => `
+        list.innerHTML = `
             <div class="log-item">
                 <div class="log-item-head">
                     <div style="display:flex;gap:6px;align-items:center">
@@ -1073,12 +1081,12 @@ function showPlayerGames(name) {
                     </div>
                 </div>
                 <div class="log-teams">
-                    <div class="log-team">${g.teamA.map(p => `<span class="log-player${p.name===name?' me':''}"><span class="lv lv-${p.level}"></span>${p.name}(${p.level})</span>`).join('')}</div>
+                    <div class="log-team">${g.teamA.map(p => playerChip(p, name)).join('')}</div>
                     <span class="log-vs">VS</span>
-                    <div class="log-team">${g.teamB.map(p => `<span class="log-player${p.name===name?' me':''}"><span class="lv lv-${p.level}"></span>${p.name}(${p.level})</span>`).join('')}</div>
+                    <div class="log-team">${g.teamB.map(p => playerChip(p, name)).join('')}</div>
                 </div>
             </div>
-        `).join('');
+        `;
     }
     $('#modalPlayerGames').classList.add('show');
 }
@@ -1116,7 +1124,7 @@ function renderPlayers() {
             <span class="h-rest">쉼</span>
             <span class="h-status">상태</span>
         </div>`;
-        list.innerHTML = header + arr.map(p => {
+        list.innerHTML = header + header.replace('pr-header', 'pr-header pr-header-dup') + arr.map(p => {
             const genderCls = p.gender === '남' ? 'male' : 'female';
             const isQueued = queuedIds.has(p.id) && p.status === 'waiting';
             const restVal = (p.status === 'waiting' || p.status === 'playing') ? p.restCount : '-';
@@ -1127,7 +1135,7 @@ function renderPlayers() {
             <div class="pr ${p.selected?'selected':''} ${p.status} ${isQueued?'queued':''} gender-${genderCls}" onclick="toggleSelect('${p.id}')">
                 <span class="pr-name-wrap">
                     <span class="pr-name">${p.name}</span>
-                    ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map(t => `<span class="pr-lastgame type-${typeClsMap[t]||''}" onclick="event.stopPropagation();showPlayerGames('${p.name}')" title="클릭하면 매칭 상대 확인">${t}</span>`).join('')}</span>` : ''}
+                    ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map((t,idx) => `<span class="pr-lastgame type-${typeClsMap[t]||''}" onclick="event.stopPropagation();showPlayerGames('${p.name}',${idx})" title="클릭하면 매칭 상대 확인">${t}</span>`).join('')}</span>` : ''}
                 </span>
                 <span class="pr-lv lv-${p.level}">${p.level}</span>
                 <span class="pr-gender ${genderCls}">${p.gender}</span>

@@ -289,7 +289,14 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .chip.active { background:var(--green-bg2); border-color:var(--green-border); color:var(--green-d); font-weight:700; }
 
 .player-scroll { flex:1; overflow-y:auto; overflow-x:hidden; padding:0; }
-.player-list { display:flex; flex-direction:column; }
+.player-list { display:grid; grid-template-columns:1fr 1fr; }
+.player-list > *:nth-child(odd) { border-right:1px solid var(--brd); }
+@media(max-width:1024px) {
+    .player-list { grid-template-columns:1fr; }
+    .player-list > *:nth-child(odd) { border-right:none; }
+    .pr-header.pr-header-dup { display:none !important; }
+}
+.player-list > div[style] { grid-column:1 / -1; }
 
 /* 헤더 행 */
 .pr-header {
@@ -333,8 +340,8 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr-lastgames { display:flex; flex-wrap:wrap; gap:2px; align-self:flex-start; }
 
 .pr-lastgame {
-    font-size:.56rem; font-weight:700; line-height:1;
-    padding:2px 3px; border-radius:3px;
+    font-size:.66rem; font-weight:700; line-height:1;
+    padding:4px 6px; border-radius:4px;
     color:#fff; opacity:.85; flex-shrink:0;
     cursor:pointer;
 }
@@ -564,9 +571,25 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .log-item-court { font-size:.68rem; color:var(--txt2); font-weight:600; }
 
 .log-teams { display:flex; align-items:center; gap:10px; }
-.log-team { flex:1; display:flex; gap:4px; flex-wrap:wrap; }
-.log-player { font-size:.78rem; padding:2px 8px; background:#fff; border:1px solid var(--brd); border-radius:6px; display:flex; align-items:center; gap:3px; }
-.log-player.me { border-color:var(--green); font-weight:700; }
+.log-team { flex:1; display:flex; flex-direction:column; gap:5px; }
+.log-player {
+    font-size:.8rem; font-weight:600; padding:5px 9px 5px 7px;
+    background:#fff; border:1px solid var(--brd); border-left:3px solid var(--brd);
+    border-radius:6px; display:flex; align-items:center; gap:6px;
+}
+.log-player.male { border-left-color:var(--blue); }
+.log-player.female { border-left-color:var(--pink); }
+.log-player.me { background:var(--green-bg); border-color:var(--green-border); border-left-color:var(--green); font-weight:800; }
+.log-player-lv {
+    font-size:.66rem; font-weight:800; color:#fff; flex-shrink:0;
+    width:18px; height:18px; border-radius:3px;
+    display:flex; align-items:center; justify-content:center;
+}
+.log-player-lv.lv-A { background:#b04a4a; }
+.log-player-lv.lv-B { background:#bd7a4a; }
+.log-player-lv.lv-C { background:#35785a; }
+.log-player-lv.lv-D { background:#4a6fa5; }
+.log-player-lv.lv-E { background:#6e6499; }
 .log-vs { font-size:.7rem; font-weight:800; color:var(--txt3); flex-shrink:0; }
 
 /* ========== TOAST ========== */
