@@ -273,14 +273,20 @@ async function confirmSave() {
         console.log('=== 출석 ===', ds);
         played.forEach(p => console.log(`${p.name}|${p.level}|${p.gender}|${p.gameCount}게임`));
         toast('Apps Script URL 미설정. 콘솔에 기록됨.', 'info');
-    } else {
-        try {
-            await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'saveAttendance',date:ds,players:played.map(p=>({name:p.name,level:p.level,gender:p.gender,gameCount:p.gameCount}))}) });
-            toast('출석 저장 완료!', 'ok');
-            setAttExportStatus(true);
-        } catch { toast('저장 실패', 'err'); }
+        closeModal('modalSave');
+        return;
     }
     closeModal('modalSave');
+    showLoading('출석 내보내는 중...');
+    try {
+        await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'saveAttendance',date:ds,players:played.map(p=>({name:p.name,level:p.level,gender:p.gender,gameCount:p.gameCount}))}) });
+        toast('출석 저장 완료!', 'ok');
+        _attendanceExported = true;
+        setAttExportStatus(true);
+        saveState();
+    } catch { toast('저장 실패', 'err'); } finally {
+        hideLoading();
+    }
 }
 
 // ============ COURTS ============
@@ -1275,6 +1281,7 @@ function renderQueue() {
 function showGameLog() {
     $('#modalGameLog').classList.add('show');
     renderGameLog();
+    checkGameLogExportedFromSheet();
 }
 
 function renderGameLog() {
@@ -1371,12 +1378,16 @@ async function exportGamesToSheet() {
         await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
         // 내보낸 게임번호 기록
         newGames.forEach(g => _exportedGameNums.add(g.gameNum));
+        refreshGameExportStatus();
         saveState();
         toast(`게임 기록 ${newGames.length}건 시트 내보내기 완료!`, 'ok');
+        // 시트에 실제로 반영됐는지 재확인 (지연 반영/실패 등으로 어긋나면 배지 정정)
+        checkGameLogExportedFromSheet();
     } catch(e) {
         toast('게임 기록 내보내기 실패: ' + e.message, 'err');
     } finally {
         _exportingGames = false;
+        hideLoading();
         hideLoading();
     }
 }
@@ -1404,7 +1415,7 @@ async function exportAttendanceToSheet() {
     }
 
     _exportingAttendance = true;
-    toast('출석 내보내는 중...', 'info');
+    showLoading('출석 내보내는 중...');
 
     try {
         const payload = {
@@ -1421,6 +1432,7 @@ async function exportAttendanceToSheet() {
         toast('출석 내보내기 실패: ' + e.message, 'err');
     } finally {
         _exportingAttendance = false;
+        hideLoading();
     }
 }
 
@@ -1623,6 +1635,54 @@ function fetchStateFromSheet() {
     });
 }
 
+/** gviz 셀 값에서 날짜(YYYY-MM-DD)를 뽑아냄. 시트가 문자열을 날짜로 자동 변환한 경우(Date(y,m,d) 형식)도 처리 */
+function gvizCellDateStr(cell) {
+    if (!cell) return '';
+    const v = cell.v;
+    if (typeof v === 'string') {
+        const m = v.match(/^Date\((\d+),(\d+),(\d+)/);
+        if (m) return `${m[1]}-${String(Number(m[2])+1).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+        return v.slice(0, 10);
+    }
+    return String(v ?? '').slice(0, 10);
+}
+
+/**
+ * 구글시트 '게임매칭' 탭을 직접 조회해 오늘 날짜로 실제 저장된 게임번호를 확인.
+ * 시트에서 행을 지워도 로컬 _exportedGameNums가 그대로 남아 배지가 어긋나는 문제를 막기 위해,
+ * 조회 결과로 _exportedGameNums를 오늘자 실제 시트 상태로 교체하고 배지를 갱신한다.
+ */
+function checkGameLogExportedFromSheet() {
+    return new Promise((resolve) => {
+        if (!CONFIG.SHEET_ID) { resolve(null); return; }
+        const cb = '_gamelog_cb_' + Date.now();
+        const to = setTimeout(() => { delete window[cb]; sc.remove(); resolve(null); }, 8000);
+        window[cb] = function(r) {
+            clearTimeout(to); delete window[cb]; sc.remove();
+            try {
+                const rows = r?.table?.rows || [];
+                const today = todayStr();
+                const nums = new Set();
+                rows.forEach(row => {
+                    const c = row.c || [];
+                    const dateStr = gvizCellDateStr(c[0]);
+                    const numVal = c[1]?.v;
+                    if (dateStr === today && numVal != null) nums.add(Number(numVal));
+                });
+                _exportedGameNums = nums;
+                refreshGameExportStatus();
+                saveState();
+                resolve(nums);
+            } catch (e) { resolve(null); }
+        };
+        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=responseHandler:${cb}&sheet=${encodeURIComponent(CONFIG.GAME_LOG_TAB)}`;
+        const sc = document.createElement('script');
+        sc.src = url;
+        sc.onerror = () => { clearTimeout(to); delete window[cb]; sc.remove(); resolve(null); };
+        document.head.appendChild(sc);
+    });
+}
+
 /** 시트에 저장된 상태 JSON을 삭제 (운동 종료 시 사용 — 안 지우면 새로고침 시 시트에서 되살아남) */
 async function clearStateFromSheet() {
     if (!CONFIG.APPS_SCRIPT_URL) return;
@@ -1767,6 +1827,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setAttExportStatus(_attendanceExported);
         applyRuleUI();
         renderAll();
+        checkGameLogExportedFromSheet();
         toast('이전 데이터를 복원했습니다', 'ok');
     } else {
         setAttExportStatus(false);
