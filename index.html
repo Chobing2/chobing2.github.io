@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=12">
+    <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -22,10 +22,8 @@
     <div class="header-right">
         <button class="btn btn-sheet" id="btnLoadSheet"><i data-lucide="download"></i>시트 불러오기</button>
         <button class="btn btn-sheet" id="btnOpenSheet" onclick="window.open('https://docs.google.com/spreadsheets/d/13a8PaYF_DtxtqjIx9ByWOMDZAZjIMJNXWjQP21RpM-U','_blank')"><i data-lucide="external-link"></i>구글시트 이동</button>
-        <button class="btn btn-history" id="btnGameLog"><i data-lucide="clipboard-list"></i>게임 기록</button>
-        <span class="btn-yn no" id="gameExportStatus" title="게임 기록 시트 내보내기 여부">N</span>
-        <button class="btn btn-save" id="btnSaveAttendance"><i data-lucide="save"></i>출석 저장</button>
-        <span class="btn-yn no" id="attExportStatus" title="출석 저장(구글시트 내보내기) 여부">N</span>
+        <button class="btn btn-history" id="btnGameLog" title="게임 기록 시트 내보내기 여부"><i data-lucide="clipboard-list"></i>게임 기록 <span class="btn-yn no" id="gameExportStatus">N</span></button>
+        <button class="btn btn-save" id="btnSaveAttendance" title="출석 저장(구글시트 내보내기) 여부"><i data-lucide="save"></i>출석 저장 <span class="btn-yn no" id="attExportStatus">N</span></button>
         <button class="btn btn-reset" id="btnEndSession" title="오늘 운동 종료 (시트 상태 데이터 삭제)"><i data-lucide="flag"></i>운동 종료</button>
         <button class="btn btn-reset" id="btnResetData" title="오늘 데이터 초기화"><i data-lucide="trash-2"></i>초기화</button>
     </div>
