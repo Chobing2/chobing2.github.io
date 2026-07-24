@@ -90,6 +90,16 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .att-status.yes { background:var(--green-bg2); color:var(--green-d); border-color:var(--green-border); }
 .att-status.yes .att-status-val { background:var(--green); }
 
+/* 버튼 옆에 붙는 작은 Y/N 아이콘 (pill 없이 배지만) */
+.btn-yn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; margin-left:-4px; border-radius:4px;
+    font-size:.68rem; font-weight:800; color:#fff; line-height:1;
+    user-select:none; transition:background .2s;
+}
+.btn-yn.no { background:var(--red); }
+.btn-yn.yes { background:var(--green); }
+
 /* ========== BUTTONS ========== */
 .btn {
     display:inline-flex; align-items:center; gap:5px;

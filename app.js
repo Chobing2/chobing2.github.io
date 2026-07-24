@@ -116,8 +116,7 @@ function setAttExportStatus(done) {
     if (!el) return;
     el.classList.toggle('yes', !!done);
     el.classList.toggle('no', !done);
-    const val = el.querySelector('.att-status-val');
-    if (val) val.textContent = done ? 'Y' : 'N';
+    el.textContent = done ? 'Y' : 'N';
 }
 
 // 게임 기록 시트 내보내기 여부 표시 N/Y (기록된 게임이 모두 내보내기 완료된 경우에만 Y)
@@ -126,8 +125,7 @@ function setGameExportStatus(done) {
     if (!el) return;
     el.classList.toggle('yes', !!done);
     el.classList.toggle('no', !done);
-    const val = el.querySelector('.att-status-val');
-    if (val) val.textContent = done ? 'Y' : 'N';
+    el.textContent = done ? 'Y' : 'N';
 }
 
 // 게임 기록 전체가 내보내기 완료됐는지 판단 후 배지 갱신
