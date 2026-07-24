@@ -120,6 +120,22 @@ function setAttExportStatus(done) {
     if (val) val.textContent = done ? 'Y' : 'N';
 }
 
+// 게임 기록 시트 내보내기 여부 표시 N/Y (기록된 게임이 모두 내보내기 완료된 경우에만 Y)
+function setGameExportStatus(done) {
+    const el = $('#gameExportStatus');
+    if (!el) return;
+    el.classList.toggle('yes', !!done);
+    el.classList.toggle('no', !done);
+    const val = el.querySelector('.att-status-val');
+    if (val) val.textContent = done ? 'Y' : 'N';
+}
+
+// 게임 기록 전체가 내보내기 완료됐는지 판단 후 배지 갱신
+function refreshGameExportStatus() {
+    const done = S.gameLog.length > 0 && S.gameLog.every(g => _exportedGameNums.has(g.gameNum));
+    setGameExportStatus(done);
+}
+
 // 매칭 기록용 키 생성 (4명 id 정렬)
 function matchKey(ids) { return [...ids].sort().join(','); }
 
@@ -993,7 +1009,7 @@ function addToQueue(teamA, teamB, type) {
 function removeFromQueue(gid) { S.queue = S.queue.filter(g => g.id !== gid); renderAll(); }
 
 // ============ RENDERING ============
-function renderAll() { renderCourts(); renderPlayers(); renderQueue(); renderPreview(); if (courtsCollapsed) renderCourtsSummary(); saveState(); }
+function renderAll() { renderCourts(); renderPlayers(); renderQueue(); renderPreview(); if (courtsCollapsed) renderCourtsSummary(); refreshGameExportStatus(); saveState(); }
 
 function renderCourts() {
     const el = $('#courtsRow');
