@@ -354,7 +354,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr.gender-male { border-left:3px solid var(--blue); }
 .pr.gender-female { border-left:3px solid var(--pink); }
 
-.pr-name-wrap { display:flex; flex-direction:column; gap:2px; min-width:44px; flex:1; overflow:hidden; }
+.pr-name-wrap { display:flex; flex-direction:column; gap:6px; min-width:44px; flex:1; overflow:hidden; }
 
 .pr-name { font-size:.88rem; font-weight:700; color:var(--txt); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
