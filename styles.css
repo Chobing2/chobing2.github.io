@@ -318,12 +318,12 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 }
 .pr-header span { flex-shrink:0; }
 .pr-header .h-name { flex:1; min-width:44px; }
-.pr-header .h-lv { width:34px; text-align:center; }
-.pr-header .h-gender { width:26px; text-align:center; }
-.pr-header .h-shuttle { width:22px; text-align:center; }
-.pr-header .h-games { width:34px; text-align:center; }
-.pr-header .h-rest { width:44px; text-align:center; }
-.pr-header .h-status { width:82px; text-align:center; }
+.pr-header .h-lv { width:24px; text-align:center; }
+.pr-header .h-gender { width:18px; text-align:center; }
+.pr-header .h-shuttle { width:18px; text-align:center; }
+.pr-header .h-games { width:24px; text-align:center; }
+.pr-header .h-rest { width:32px; text-align:center; }
+.pr-header .h-status { width:60px; text-align:center; }
 
 /* --- Player Row (pr) --- */
 .pr {
@@ -363,7 +363,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr-lastgame.type-special { background:#c47a4a; }
 
 .pr-lv {
-    font-size:.82rem; font-weight:800; padding:3px 0; width:34px; text-align:center; border-radius:3px; color:#fff; flex-shrink:0;
+    font-size:.68rem; font-weight:800; padding:2px 0; width:24px; text-align:center; border-radius:3px; color:#fff; flex-shrink:0;
 }
 .pr-lv.lv-A { background:#b04a4a; }
 .pr-lv.lv-B { background:#bd7a4a; }
@@ -371,38 +371,38 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr-lv.lv-D { background:#4a6fa5; }
 .pr-lv.lv-E { background:#6e6499; }
 
-.pr-gender { font-size:.85rem; font-weight:700; flex-shrink:0; width:26px; text-align:center; }
+.pr-gender { font-size:.72rem; font-weight:700; flex-shrink:0; width:18px; text-align:center; }
 .pr-gender.male { color:var(--blue); }
 .pr-gender.female { color:var(--pink); }
 
 /* 콕 체크박스 */
 .pr-shuttle {
-    flex-shrink:0; width:22px; height:22px; cursor:pointer;
+    flex-shrink:0; width:17px; height:17px; cursor:pointer;
     accent-color:var(--green);
 }
 
 /* 게임수 */
 .pr-games {
-    width:34px; height:28px;
+    width:24px; height:22px;
     display:flex; align-items:center; justify-content:center;
-    border-radius:4px; font-size:.9rem; font-weight:800;
+    border-radius:4px; font-size:.75rem; font-weight:800;
     background:var(--bg3); color:var(--txt3); flex-shrink:0;
 }
 .pr-games.has-games { background:var(--green); color:#fff; }
 
 /* 쉼 표시 */
 .pr-rest {
-    font-size:.78rem; font-weight:600; color:var(--txt3); width:44px; text-align:center;
-    background:#f0f0f0; padding:3px 0; border-radius:4px; flex-shrink:0;
+    font-size:.66rem; font-weight:600; color:var(--txt3); width:32px; text-align:center;
+    background:#f0f0f0; padding:2px 0; border-radius:4px; flex-shrink:0;
 }
 .pr-rest.urgent { color:#fff; background:var(--red); }
 
 /* 상태 드롭다운 (select) */
 .pr-status-select {
-    font-size:.85rem; font-weight:600; padding:6px 4px;
+    font-size:.68rem; font-weight:600; padding:4px 2px;
     border:1px solid var(--brd); border-radius:4px;
     background:#fff; color:var(--txt); cursor:pointer;
-    font-family:inherit; flex-shrink:0; outline:none; width:82px;
+    font-family:inherit; flex-shrink:0; outline:none; width:60px;
 }
 .pr-status-select:focus { border-color:var(--green); }
 
@@ -673,10 +673,8 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     .q-vs { font-size:.68rem; }
 
     /* 대기인원 컴팩트 */
-    .pr { padding:8px 28px 8px 10px; gap:6px; }
+    .pr { padding:8px 28px 8px 10px; gap:5px; }
     .pr-name { font-size:.82rem; }
-    .pr-lv { font-size:.75rem; padding:2px 6px; }
-    .pr-status-select { font-size:.8rem; width:82px; }
 }
 
 /* TABLET (max 1024px) */
