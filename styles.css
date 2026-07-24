@@ -224,9 +224,9 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .court-body { padding:14px; min-height:80px; }
 .court-empty { display:flex; align-items:center; justify-content:center; height:80px; color:var(--txt3); font-size:.9rem; }
 .court-game { display:flex; flex-direction:column; gap:6px; }
-.court-team { display:flex; flex-direction:column; gap:5px; padding:8px 10px; background:var(--bg2); border-radius:var(--r); }
+.court-team { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px 10px; background:var(--bg2); border-radius:var(--r); }
 .court-vs { text-align:center; font-size:.82rem; font-weight:900; color:var(--txt3); letter-spacing:.08em; padding:2px 0; }
-.team-player { display:flex; align-items:center; gap:6px; font-weight:700; font-size:.9rem; }
+.team-player { display:flex; align-items:center; gap:6px; font-weight:700; font-size:.9rem; flex:1; min-width:88px; }
 .tp-lv {
     font-size:.72rem; font-weight:800; color:#fff; flex-shrink:0;
     width:22px; height:22px; border-radius:4px;
