@@ -1736,21 +1736,27 @@ function showEndSessionModal() {
     $('#modalEndSession').classList.add('show');
 }
 async function doEndSession() {
-    if (confirm('출석 저장 / 게임 기록 내보내기도 같이 진행할까요?')) {
-        const played = S.players.filter(p => p.gameCount > 0);
-        if (played.length && CONFIG.APPS_SCRIPT_URL) await saveAttendanceToSheet(played);
-        await exportGamesToSheet();
-    }
-    // 위 내보내기 과정에서 걸린 saveState()가 뒤늦게(1500ms 디바운스 + GAS 지연) 도착해
-    // 방금 지운 '상태' 탭을 다시 채우는 일이 없도록, 지우기 직전에 동기화를 완전히 차단한다.
-    _sessionEnding = true;
-    clearTimeout(_syncTimer);
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-    clearStateFromSheet().finally(() => {
+    const withExport = confirm('출석 저장 / 게임 기록 내보내기도 같이 진행할까요?');
+    showLoading('게임 종료 중...');
+    try {
+        if (withExport) {
+            const played = S.players.filter(p => p.gameCount > 0);
+            if (played.length && CONFIG.APPS_SCRIPT_URL) await saveAttendanceToSheet(played);
+            await exportGamesToSheet();
+            showLoading('게임 종료 중...');
+        }
+        // 위 내보내기 과정에서 걸린 saveState()가 뒤늦게(1500ms 디바운스 + GAS 지연) 도착해
+        // 방금 지운 '상태' 탭을 다시 채우는 일이 없도록, 지우기 직전에 동기화를 완전히 차단한다.
+        _sessionEnding = true;
+        clearTimeout(_syncTimer);
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        await clearStateFromSheet();
         closeModal('modalEndSession');
         toast('운동 종료. 오늘 데이터를 모두 삭제했습니다.', 'info');
         location.reload();
-    });
+    } finally {
+        hideLoading();
+    }
 }
 
 // ============ EVENTS ============
