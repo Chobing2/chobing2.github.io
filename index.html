@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=18">
+    <link rel="stylesheet" href="styles.css?v=19">
 </head>
 <body>
 
@@ -234,7 +234,6 @@
             <h3><i data-lucide="clipboard-list"></i>금일 게임 기록</h3>
             <div style="display:flex;gap:6px;align-items:center">
                 <button class="btn btn-primary-sm" id="btnExportGames"><i data-lucide="upload"></i>시트에 내보내기</button>
-                <button class="btn btn-primary-sm" id="btnExportAttendance"><i data-lucide="upload"></i>출석 내보내기</button>
                 <button class="btn-x" onclick="closeModal('modalGameLog')">&times;</button>
             </div>
         </div>
@@ -267,6 +266,11 @@
 </div>
 
 <div class="toast-box" id="toastBox"></div>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-msg">내보내는 중...</div>
+</div>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 <script src="app.js"></script>
 <script>

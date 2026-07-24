@@ -99,6 +99,17 @@ function toast(msg, type='info') {
     setTimeout(() => el.remove(), 3000);
 }
 
+// 화면 전체를 덮는 로딩 오버레이 (내보내기 등 다른 조작을 막아야 하는 작업용)
+function showLoading(msg) {
+    const el = $('#loadingOverlay');
+    if (!el) return;
+    el.querySelector('.loading-msg').textContent = msg;
+    el.classList.add('show');
+}
+function hideLoading() {
+    $('#loadingOverlay')?.classList.remove('show');
+}
+
 function fmtTime(sec) {
     return `${Math.floor(sec/60).toString().padStart(2,'0')}:${(sec%60).toString().padStart(2,'0')}`;
 }
@@ -1338,7 +1349,7 @@ async function exportGamesToSheet() {
     }
 
     _exportingGames = true;
-    toast('게임 기록 내보내는 중...', 'info');
+    showLoading('게임 기록 내보내는 중...');
 
     try {
         const payload = {
@@ -1366,6 +1377,7 @@ async function exportGamesToSheet() {
         toast('게임 기록 내보내기 실패: ' + e.message, 'err');
     } finally {
         _exportingGames = false;
+        hideLoading();
     }
 }
 
@@ -1681,7 +1693,6 @@ function initEvents() {
     $('#btnSaveAttendance').onclick = showSaveModal;
     $('#btnGameLog').onclick = showGameLog;
     $('#btnExportGames').onclick = exportGamesToSheet;
-    $('#btnExportAttendance').onclick = exportAttendanceToSheet;
     $('#btnAddCourt').onclick = addCourt;
     $('#btnSelectAll').onclick = () => $$('#sheetList .sheet-item').forEach(e => e.classList.add('checked'));
     $('#btnDeselectAll').onclick = () => $$('#sheetList .sheet-item').forEach(e => e.classList.remove('checked'));
