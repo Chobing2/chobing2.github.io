@@ -1019,9 +1019,9 @@ function renderCourts() {
             <div class="court-body">
                 ${live?`
                 <div class="court-game">
-                    <div class="court-team">${c.game.teamA.map(id=>`<div class="team-player"><span class="level-dot ${pL(id)}"></span><strong>${pN(id)}</strong> <span class="pc-lv lv-${pL(id)}" style="font-size:.6rem;padding:1px 5px">${pL(id)}</span></div>`).join('')}</div>
+                    <div class="court-team">${c.game.teamA.map(id=>`<div class="team-player"><span class="tp-lv lv-${pL(id)}">${pL(id)}</span><strong>${pN(id)}</strong></div>`).join('')}</div>
                     <div class="court-vs">VS</div>
-                    <div class="court-team">${c.game.teamB.map(id=>`<div class="team-player"><span class="level-dot ${pL(id)}"></span><strong>${pN(id)}</strong> <span class="pc-lv lv-${pL(id)}" style="font-size:.6rem;padding:1px 5px">${pL(id)}</span></div>`).join('')}</div>
+                    <div class="court-team">${c.game.teamB.map(id=>`<div class="team-player"><span class="tp-lv lv-${pL(id)}">${pL(id)}</span><strong>${pN(id)}</strong></div>`).join('')}</div>
                 </div>
                 `:`<div class="court-empty">대기중</div>`}
             </div>

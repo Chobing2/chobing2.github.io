@@ -224,9 +224,19 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .court-body { padding:14px; min-height:80px; }
 .court-empty { display:flex; align-items:center; justify-content:center; height:80px; color:var(--txt3); font-size:.9rem; }
 .court-game { display:flex; flex-direction:column; gap:6px; }
-.court-team { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--bg2); border-radius:var(--r); }
+.court-team { display:flex; flex-direction:column; gap:5px; padding:8px 10px; background:var(--bg2); border-radius:var(--r); }
 .court-vs { text-align:center; font-size:.82rem; font-weight:900; color:var(--txt3); letter-spacing:.08em; padding:2px 0; }
-.team-player { display:flex; align-items:center; gap:5px; font-weight:700; font-size:.9rem; }
+.team-player { display:flex; align-items:center; gap:6px; font-weight:700; font-size:.9rem; }
+.tp-lv {
+    font-size:.72rem; font-weight:800; color:#fff; flex-shrink:0;
+    width:22px; height:22px; border-radius:4px;
+    display:flex; align-items:center; justify-content:center;
+}
+.tp-lv.lv-A { background:#b04a4a; }
+.tp-lv.lv-B { background:#bd7a4a; }
+.tp-lv.lv-C { background:#35785a; }
+.tp-lv.lv-D { background:#4a6fa5; }
+.tp-lv.lv-E { background:#6e6499; }
 
 .court-foot { display:flex; padding:10px 14px; gap:8px; border-top:1px solid var(--brd); }
 .court-foot .btn { flex:1; justify-content:center; font-size:.88rem; padding:9px 0; border-radius:var(--r); font-weight:700; }
@@ -624,9 +634,9 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     .court-game { gap:3px; }
     .court-team { padding:4px 6px; gap:4px; }
     .court-vs { font-size:.7rem; padding:1px 0; }
-    .team-player { font-size:.75rem; gap:3px; }
+    .team-player { font-size:.75rem; gap:4px; }
     .team-player strong { font-size:.75rem; }
-    .team-player .pc-lv { font-size:.5rem !important; padding:0px 3px !important; }
+    .tp-lv { width:18px; height:18px; font-size:.62rem; }
     .court-foot { padding:6px 10px; gap:4px; }
     .court-foot .btn { font-size:.7rem; padding:5px 0; }
 
