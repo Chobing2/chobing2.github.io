@@ -93,8 +93,8 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 /* 버튼 옆에 붙는 작은 Y/N 아이콘 (pill 없이 배지만) */
 .btn-yn {
     display:inline-flex; align-items:center; justify-content:center;
-    width:18px; height:18px; margin-left:-4px; border-radius:4px;
-    font-size:.68rem; font-weight:800; color:#fff; line-height:1;
+    width:32px; height:32px; margin-left:-4px; border-radius:var(--r);
+    font-size:.8rem; font-weight:800; color:#fff; line-height:1;
     user-select:none; transition:background .2s;
 }
 .btn-yn.no { background:var(--red); }
@@ -756,6 +756,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     .app-header { height:44px; }
     .logo h1 { font-size:.85rem; }
     .header-right .btn-history, .header-right .btn-save { font-size:.65rem; padding:4px 7px; }
+    .btn-yn { width:24px; height:24px; font-size:.65rem; }
     .court-card { flex:0 0 250px; }
     .court-name { font-size:.85rem; }
     .court-timer { font-size:.88rem; }
