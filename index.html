@@ -54,6 +54,35 @@
             <div class="courts-summary hidden" id="courtsSummary"></div>
         </div>
 
+        <!-- 대기 인원 (좌측 메인으로 이동) -->
+        <div class="panel panel-players">
+            <div class="panel-head">
+                <h3><i data-lucide="users"></i>대기 인원 <span class="badge" id="waitingCount">0</span></h3>
+                <input type="text" class="search-input" id="searchPlayer" placeholder="이름 검색">
+            </div>
+            <div class="filter-row">
+                <button class="chip active" data-filter="all">전체</button>
+                <button class="chip" data-filter="waiting">대기</button>
+                <button class="chip" data-filter="playing">게임중</button>
+                <button class="chip" data-filter="resting">휴식</button>
+                <button class="chip" data-filter="late">늦참</button>
+            </div>
+            <div class="player-scroll">
+                <div class="player-list" id="playerList"></div>
+            </div>
+            <div class="panel-foot">
+                <button class="btn btn-outline-full" id="btnAddManual">+ 직접 추가</button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- TOGGLE BUTTON -->
+    <button class="panel-toggle" id="btnTogglePlayers" onclick="togglePlayerPanel()" title="매칭 패널 열기/닫기"><i data-lucide="menu"></i></button>
+
+    <!-- RIGHT COLUMN: 대기 인원 -->
+    <section class="section-right" id="sectionRight">
+        <!-- 게임 매칭 (우측 사이드로 이동) -->
         <!-- 매칭 -->
         <div class="panel panel-match">
             <div class="panel-head">
@@ -93,33 +122,6 @@
                 <div class="queue-scroll" id="queueList">
                     <div class="queue-empty">예정된 게임이 없습니다</div>
                 </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- TOGGLE BUTTON -->
-    <button class="panel-toggle" id="btnTogglePlayers" onclick="togglePlayerPanel()" title="대기인원 열기/닫기"><i data-lucide="menu"></i></button>
-
-    <!-- RIGHT COLUMN: 대기 인원 -->
-    <section class="section-right" id="sectionRight">
-        <div class="panel panel-players">
-            <div class="panel-head">
-                <h3><i data-lucide="users"></i>대기 인원 <span class="badge" id="waitingCount">0</span></h3>
-                <input type="text" class="search-input" id="searchPlayer" placeholder="이름 검색">
-            </div>
-            <div class="filter-row">
-                <button class="chip active" data-filter="all">전체</button>
-                <button class="chip" data-filter="waiting">대기</button>
-                <button class="chip" data-filter="playing">게임중</button>
-                <button class="chip" data-filter="resting">휴식</button>
-                <button class="chip" data-filter="late">늦참</button>
-            </div>
-            <div class="player-scroll">
-                <div class="player-list" id="playerList"></div>
-            </div>
-            <div class="panel-foot">
-                <button class="btn btn-outline-full" id="btnAddManual">+ 직접 추가</button>
             </div>
         </div>
     </section>
@@ -248,6 +250,18 @@
             <div class="log-list" id="logList">
                 <div style="text-align:center;padding:20px;color:var(--txt3)">아직 완료된 게임이 없습니다</div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-bg" id="modalPlayerGames">
+    <div class="modal modal-sm">
+        <div class="modal-top">
+            <h3><i data-lucide="history"></i><span id="playerGamesTitle">최근 게임</span></h3>
+            <button class="btn-x" onclick="closeModal('modalPlayerGames')">&times;</button>
+        </div>
+        <div class="modal-mid">
+            <div class="log-list" id="playerGamesList"></div>
         </div>
     </div>
 </div>

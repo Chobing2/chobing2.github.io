@@ -1043,6 +1043,46 @@ function getLastGameTypes(name, count = 5) {
     return types;
 }
 
+function getLastGames(name, count = 5) {
+    const games = [];
+    for (let i = S.gameLog.length - 1; i >= 0 && games.length < count; i--) {
+        const g = S.gameLog[i];
+        if ([...g.teamA, ...g.teamB].some(p => p.name === name)) games.push(g);
+    }
+    return games;
+}
+
+function showPlayerGames(name) {
+    const games = getLastGames(name, 5);
+    $('#playerGamesTitle').textContent = `${name} · 최근 게임`;
+    const list = $('#playerGamesList');
+    if (!games.length) {
+        list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--txt3)">아직 게임 기록이 없습니다</div>';
+    } else {
+        list.innerHTML = games.map(g => `
+            <div class="log-item">
+                <div class="log-item-head">
+                    <div style="display:flex;gap:6px;align-items:center">
+                        <span class="log-item-num">#${g.gameNum}</span>
+                        <span class="log-item-type ${g.type}">${g.type}</span>
+                        <span class="log-item-court">${g.court}</span>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <span class="log-item-time">⏱ ${fmtTime(g.duration)}</span>
+                        <span class="log-item-time">${g.time}</span>
+                    </div>
+                </div>
+                <div class="log-teams">
+                    <div class="log-team">${g.teamA.map(p => `<span class="log-player${p.name===name?' me':''}"><span class="lv lv-${p.level}"></span>${p.name}(${p.level})</span>`).join('')}</div>
+                    <span class="log-vs">VS</span>
+                    <div class="log-team">${g.teamB.map(p => `<span class="log-player${p.name===name?' me':''}"><span class="lv lv-${p.level}"></span>${p.name}(${p.level})</span>`).join('')}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    $('#modalPlayerGames').classList.add('show');
+}
+
 function renderPlayers() {
     const list = $('#playerList');
     const search = ($('#searchPlayer')?.value||'').toLowerCase();
@@ -1087,7 +1127,7 @@ function renderPlayers() {
             <div class="pr ${p.selected?'selected':''} ${p.status} ${isQueued?'queued':''} gender-${genderCls}" onclick="toggleSelect('${p.id}')">
                 <span class="pr-name-wrap">
                     <span class="pr-name">${p.name}</span>
-                    ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map(t => `<span class="pr-lastgame type-${typeClsMap[t]||''}">${t}</span>`).join('')}</span>` : ''}
+                    ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map(t => `<span class="pr-lastgame type-${typeClsMap[t]||''}" onclick="event.stopPropagation();showPlayerGames('${p.name}')" title="클릭하면 매칭 상대 확인">${t}</span>`).join('')}</span>` : ''}
                 </span>
                 <span class="pr-lv lv-${p.level}">${p.level}</span>
                 <span class="pr-gender ${genderCls}">${p.gender}</span>

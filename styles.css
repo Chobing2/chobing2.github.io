@@ -275,6 +275,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     border-radius:var(--r); background:#fff; color:var(--txt);
     font-family:inherit; outline:none; width:160px;
 }
+.section-left .panel-players { flex:1; min-height:0; }
 .search-input:focus { border-color:var(--green); box-shadow:0 0 0 2px var(--green-bg); }
 
 .filter-row { display:flex; gap:4px; padding:8px 14px; border-bottom:1px solid var(--brd); }
@@ -293,23 +294,23 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 /* 헤더 행 */
 .pr-header {
     display:flex; align-items:center; gap:6px;
-    padding:5px 10px; background:var(--bg3); border-bottom:2px solid var(--brd2);
+    padding:5px 28px 5px 10px; background:var(--bg3); border-bottom:2px solid var(--brd2);
     font-size:.67rem; font-weight:700; color:var(--txt3); text-transform:uppercase; letter-spacing:.03em;
     position:sticky; top:0; z-index:2;
 }
 .pr-header span { flex-shrink:0; }
 .pr-header .h-name { flex:1; min-width:44px; }
-.pr-header .h-lv { width:24px; text-align:center; }
-.pr-header .h-gender { width:18px; text-align:center; }
-.pr-header .h-shuttle { width:18px; text-align:center; }
-.pr-header .h-games { width:24px; text-align:center; }
-.pr-header .h-rest { width:32px; text-align:center; }
-.pr-header .h-status { width:58px; text-align:center; }
+.pr-header .h-lv { width:34px; text-align:center; }
+.pr-header .h-gender { width:26px; text-align:center; }
+.pr-header .h-shuttle { width:22px; text-align:center; }
+.pr-header .h-games { width:34px; text-align:center; }
+.pr-header .h-rest { width:44px; text-align:center; }
+.pr-header .h-status { width:82px; text-align:center; }
 
 /* --- Player Row (pr) --- */
 .pr {
     display:flex; align-items:center; gap:6px;
-    padding:9px 10px; cursor:pointer; transition:all .12s;
+    padding:9px 28px 9px 10px; cursor:pointer; transition:all .12s;
     border-bottom:1px solid var(--brd);
     position:relative;
 }
@@ -335,14 +336,16 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     font-size:.56rem; font-weight:700; line-height:1;
     padding:2px 3px; border-radius:3px;
     color:#fff; opacity:.85; flex-shrink:0;
+    cursor:pointer;
 }
+.pr-lastgame:hover { opacity:1; }
 .pr-lastgame.type-male { background:var(--blue); }
 .pr-lastgame.type-female { background:var(--pink); }
 .pr-lastgame.type-mixed { background:#7a5fc4; }
 .pr-lastgame.type-special { background:#c47a4a; }
 
 .pr-lv {
-    font-size:.68rem; font-weight:800; padding:1px 5px; border-radius:3px; color:#fff; flex-shrink:0;
+    font-size:.82rem; font-weight:800; padding:3px 0; width:34px; text-align:center; border-radius:3px; color:#fff; flex-shrink:0;
 }
 .pr-lv.lv-A { background:#b04a4a; }
 .pr-lv.lv-B { background:#bd7a4a; }
@@ -350,45 +353,46 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr-lv.lv-D { background:#4a6fa5; }
 .pr-lv.lv-E { background:#6e6499; }
 
-.pr-gender { font-size:.72rem; font-weight:700; flex-shrink:0; }
+.pr-gender { font-size:.85rem; font-weight:700; flex-shrink:0; width:26px; text-align:center; }
 .pr-gender.male { color:var(--blue); }
 .pr-gender.female { color:var(--pink); }
 
 /* 콕 체크박스 */
 .pr-shuttle {
-    flex-shrink:0; width:16px; height:16px; cursor:pointer;
+    flex-shrink:0; width:22px; height:22px; cursor:pointer;
     accent-color:var(--green);
 }
 
 /* 게임수 */
 .pr-games {
-    min-width:24px; height:22px;
+    width:34px; height:28px;
     display:flex; align-items:center; justify-content:center;
-    border-radius:4px; font-size:.78rem; font-weight:800;
+    border-radius:4px; font-size:.9rem; font-weight:800;
     background:var(--bg3); color:var(--txt3); flex-shrink:0;
 }
 .pr-games.has-games { background:var(--green); color:#fff; }
 
 /* 쉼 표시 */
 .pr-rest {
-    font-size:.65rem; font-weight:600; color:var(--txt3);
-    background:#f0f0f0; padding:0px 4px; border-radius:4px; flex-shrink:0;
+    font-size:.78rem; font-weight:600; color:var(--txt3); width:44px; text-align:center;
+    background:#f0f0f0; padding:3px 0; border-radius:4px; flex-shrink:0;
 }
 .pr-rest.urgent { color:#fff; background:var(--red); }
 
 /* 상태 드롭다운 (select) */
 .pr-status-select {
-    font-size:.72rem; font-weight:600; padding:2px 3px;
+    font-size:.85rem; font-weight:600; padding:6px 4px;
     border:1px solid var(--brd); border-radius:4px;
     background:#fff; color:var(--txt); cursor:pointer;
-    font-family:inherit; flex-shrink:0; outline:none; max-width:60px;
+    font-family:inherit; flex-shrink:0; outline:none; width:82px;
 }
 .pr-status-select:focus { border-color:var(--green); }
 
 /* 삭제 버튼 */
 .pr-del {
     background:none; border:none; color:var(--txt3); cursor:pointer;
-    font-size:.8rem; padding:1px 3px; border-radius:3px; flex-shrink:0;
+    font-size:.95rem; padding:1px 4px; border-radius:3px; flex-shrink:0;
+    position:absolute; right:5px; top:50%; transform:translateY(-50%);
     opacity:0; transition:all .12s;
 }
 .pr:hover .pr-del { opacity:1; }
@@ -416,10 +420,10 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .panel-match { flex:1; min-height:0; display:flex; flex-direction:column; }
 
 .match-bar {
-    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
     padding:10px 14px; border-bottom:1px solid var(--brd);
 }
-.type-tabs { display:flex; gap:3px; }
+.type-tabs { display:flex; gap:3px; flex-wrap:wrap; }
 .type-tab {
     padding:7px 15px; font-size:.73rem; font-weight:600;
     background:var(--bg2); border:1px solid var(--brd); color:var(--txt3);
@@ -562,6 +566,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .log-teams { display:flex; align-items:center; gap:10px; }
 .log-team { flex:1; display:flex; gap:4px; flex-wrap:wrap; }
 .log-player { font-size:.78rem; padding:2px 8px; background:#fff; border:1px solid var(--brd); border-radius:6px; display:flex; align-items:center; gap:3px; }
+.log-player.me { border-color:var(--green); font-weight:700; }
 .log-vs { font-size:.7rem; font-weight:800; color:var(--txt3); flex-shrink:0; }
 
 /* ========== TOAST ========== */
@@ -634,10 +639,10 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     .q-vs { font-size:.68rem; }
 
     /* 대기인원 컴팩트 */
-    .pr { padding:5px 8px; gap:5px; }
-    .pr-name { font-size:.75rem; }
-    .pr-lv { font-size:.55rem; padding:1px 4px; }
-    .pr-status-select { font-size:.6rem; max-width:46px; }
+    .pr { padding:8px 28px 8px 10px; gap:6px; }
+    .pr-name { font-size:.82rem; }
+    .pr-lv { font-size:.75rem; padding:2px 6px; }
+    .pr-status-select { font-size:.8rem; width:82px; }
 }
 
 /* TABLET (max 1024px) */
