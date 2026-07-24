@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>버티컬 배드민턴 매칭</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+    <div class="header-left">
+        <div class="logo"><i data-lucide="feather"></i> <h1>버티컬 <span>배드민턴</span></h1></div>
+    </div>
+    <div class="header-center">
+        <div class="date-display" id="currentDate"></div>
+        <div class="att-status no" id="attExportStatus" title="출석 저장(구글시트 내보내기) 여부">
+            <span class="att-status-label">출석저장</span>
+            <span class="att-status-val">N</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-sheet" id="btnLoadSheet"><i data-lucide="download"></i>시트 불러오기</button>
+        <button class="btn btn-sheet" id="btnOpenSheet" onclick="window.open('https://docs.google.com/spreadsheets/d/13a8PaYF_DtxtqjIx9ByWOMDZAZjIMJNXWjQP21RpM-U','_blank')"><i data-lucide="external-link"></i>구글시트 이동</button>
+        <button class="btn btn-history" id="btnGameLog"><i data-lucide="clipboard-list"></i>게임 기록</button>
+        <button class="btn btn-save" id="btnSaveAttendance"><i data-lucide="save"></i>출석 저장</button>
+        <button class="btn btn-reset" id="btnEndSession" title="오늘 운동 종료 (시트 상태 데이터 삭제)"><i data-lucide="flag"></i>운동 종료</button>
+        <button class="btn btn-reset" id="btnResetData" title="오늘 데이터 초기화"><i data-lucide="trash-2"></i>초기화</button>
+    </div>
+</header>
+
+<!-- MAIN -->
+<main class="app-main">
+
+    <!-- LEFT COLUMN: 코트 + 매칭 -->
+    <section class="section-left">
+
+        <!-- 코트 현황 -->
+        <div class="section-courts" id="sectionCourts">
+            <div class="section-bar">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <button class="btn-court-toggle" id="btnToggleCourts" onclick="toggleCourts()" title="코트 접기/펼치기"><i data-lucide="chevron-down"></i></button>
+                    <h2><i data-lucide="layout-grid"></i>코트 현황</h2>
+                </div>
+                <button class="btn btn-ghost-sm" id="btnAddCourt">+ 코트 추가</button>
+            </div>
+            <!-- 펼침: 기존 코트 카드들 -->
+            <div class="courts-row" id="courtsRow"></div>
+            <!-- 접힘: 한 줄 요약 -->
+            <div class="courts-summary hidden" id="courtsSummary"></div>
+        </div>
+
+        <!-- 매칭 -->
+        <div class="panel panel-match">
+            <div class="panel-head">
+                <h3><i data-lucide="zap"></i>게임 매칭</h3>
+            </div>
+            <div class="match-bar">
+                <div class="type-tabs">
+                    <button class="type-tab active" data-type="auto">자동</button>
+                    <button class="type-tab" data-type="doubles_m">남복</button>
+                    <button class="type-tab" data-type="doubles_f">여복</button>
+                    <button class="type-tab" data-type="mixed">혼복</button>
+                    <button class="type-tab" data-type="manual">수동</button>
+                </div>
+                <button class="btn btn-primary-sm" id="btnAutoMatch"><i data-lucide="zap"></i>자동 매칭</button>
+            </div>
+            <!-- 매칭 규칙 선택 (추가 기능) -->
+            <div class="rule-selector">
+                <div class="rule-tabs">
+                    <button class="rule-tab active" data-rule="balance"><i data-lucide="scale"></i>밸런스</button>
+                    <button class="rule-tab" data-rule="same"><i data-lucide="target"></i>같은 급수</button>
+                    <button class="rule-tab" data-rule="similar"><i data-lucide="bar-chart-2"></i>비슷한 급수</button>
+                </div>
+                <div class="rule-rest-ctrl" title="이 게임 수 이상 쉰 사람은 다음 매칭에 강제로 포함됩니다">
+                    <label>강제배정</label>
+                    <input type="range" id="restThreshold" min="3" max="15" step="1" value="8">
+                    <span id="restThresholdVal">8게임</span>
+                </div>
+            </div>
+            <div class="rules-note" id="rulesNote">
+                <strong>매칭 규칙:</strong> 급수 차이 최소 · 남복/여복 우선 · 여자A는 남B~D와 3:1 허용 · 게임수 균등 · 8게임 쉬면 강제배정
+            </div>
+            <div class="preview-area" id="previewArea">
+                <div class="preview-empty"><p>대기 인원에서 4명 선택 또는<br>자동 매칭을 사용하세요</p></div>
+            </div>
+            <div class="queue-area">
+                <div class="queue-head"><span><i data-lucide="list"></i>대기 게임</span><span class="badge" id="queueCount">0</span></div>
+                <div class="queue-scroll" id="queueList">
+                    <div class="queue-empty">예정된 게임이 없습니다</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- TOGGLE BUTTON -->
+    <button class="panel-toggle" id="btnTogglePlayers" onclick="togglePlayerPanel()" title="대기인원 열기/닫기"><i data-lucide="menu"></i></button>
+
+    <!-- RIGHT COLUMN: 대기 인원 -->
+    <section class="section-right" id="sectionRight">
+        <div class="panel panel-players">
+            <div class="panel-head">
+                <h3><i data-lucide="users"></i>대기 인원 <span class="badge" id="waitingCount">0</span></h3>
+                <input type="text" class="search-input" id="searchPlayer" placeholder="이름 검색">
+            </div>
+            <div class="filter-row">
+                <button class="chip active" data-filter="all">전체</button>
+                <button class="chip" data-filter="waiting">대기</button>
+                <button class="chip" data-filter="playing">게임중</button>
+                <button class="chip" data-filter="resting">휴식</button>
+                <button class="chip" data-filter="late">늦참</button>
+            </div>
+            <div class="player-scroll">
+                <div class="player-list" id="playerList"></div>
+            </div>
+            <div class="panel-foot">
+                <button class="btn btn-outline-full" id="btnAddManual">+ 직접 추가</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- MODAL: 시트 불러오기 -->
+<div class="modal-bg" id="modalSheet">
+    <div class="modal">
+        <div class="modal-top"><h3><i data-lucide="table"></i>구글 시트에서 불러오기</h3><button class="btn-x" onclick="closeModal('modalSheet')">&times;</button></div>
+        <div class="modal-mid">
+            <p class="modal-desc">오늘 참석할 인원을 선택하세요.</p>
+            <div class="sheet-list" id="sheetList"><div class="loader"><div class="spin"></div><span>불러오는 중...</span></div></div>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" id="btnSelectAll">전체 선택</button>
+            <button class="btn btn-ghost-sm" id="btnDeselectAll">전체 해제</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-primary-sm" id="btnConfirmImport">선택 추가</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 직접 추가 -->
+<div class="modal-bg" id="modalAdd">
+    <div class="modal modal-sm">
+        <div class="modal-top"><h3>선수 직접 추가</h3><button class="btn-x" onclick="closeModal('modalAdd')">&times;</button></div>
+        <div class="modal-mid">
+            <div class="field"><label>이름</label><input type="text" id="inpName" placeholder="이름"></div>
+            <div class="field-row">
+                <div class="field"><label>급수</label><select id="inpLevel"><option value="A">A</option><option value="B">B</option><option value="C" selected>C</option><option value="D">D</option><option value="E">E</option></select></div>
+                <div class="field"><label>성별</label><select id="inpGender"><option value="남">남</option><option value="여">여</option></select></div>
+            </div>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" onclick="closeModal('modalAdd')">취소</button>
+            <button class="btn btn-primary-sm" id="btnConfirmAdd">추가</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 선수 삭제 확인 (추가 기능) -->
+<div class="modal-bg" id="modalDelPlayer">
+    <div class="modal modal-sm">
+        <div class="modal-top"><h3><i data-lucide="alert-triangle"></i>선수 삭제</h3><button class="btn-x" onclick="closeModal('modalDelPlayer')">&times;</button></div>
+        <div class="modal-mid">
+            <div class="del-warn">
+                <div class="del-name" id="delPlayerName"></div>
+                <div class="del-info" id="delPlayerInfo"></div>
+                <div class="del-msg">삭제하면 이 선수의 게임수 · 출석 등<br>오늘의 모든 정보가 사라집니다.</div>
+            </div>
+            <p class="modal-desc" style="margin-top:12px;text-align:center">정말 삭제하시겠습니까?</p>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" onclick="closeModal('modalDelPlayer')">취소</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-danger-sm" id="btnConfirmDelPlayer">삭제하기</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 데이터 초기화 확인 (추가 기능) -->
+<div class="modal-bg" id="modalReset">
+    <div class="modal modal-sm">
+        <div class="modal-top"><h3><i data-lucide="alert-triangle"></i>데이터 초기화</h3><button class="btn-x" onclick="closeModal('modalReset')">&times;</button></div>
+        <div class="modal-mid">
+            <div class="del-warn">
+                <div class="del-msg">현재 화면의 모든 인원 · 게임 기록 · 코트 진행상황이<br>삭제되고 처음 상태로 돌아갑니다.</div>
+            </div>
+            <p class="modal-desc" style="margin-top:12px;text-align:center">정말 초기화하시겠습니까?<br><span style="font-size:.72rem;color:var(--txt3)">(참가자 명단 · 게임기록 시트는 영향받지 않습니다. 상태 캐시만 삭제됩니다)</span></p>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" onclick="closeModal('modalReset')">취소</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-danger-sm" id="btnConfirmReset">초기화</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 운동 종료 확인 (추가 기능) -->
+<div class="modal-bg" id="modalEndSession">
+    <div class="modal modal-sm">
+        <div class="modal-top"><h3><i data-lucide="flag"></i>운동 종료</h3><button class="btn-x" onclick="closeModal('modalEndSession')">&times;</button></div>
+        <div class="modal-mid">
+            <div class="del-warn">
+                <div class="del-msg" id="endSessionWarn">오늘 저장된 모든 데이터(인원 · 게임 기록 · 코트 진행상황)가<br>구글시트에서도 삭제되고 처음 상태로 돌아갑니다.</div>
+            </div>
+            <p class="modal-desc" style="margin-top:12px;text-align:center">출석 저장 / 게임 기록 내보내기를 먼저 했는지 확인하세요.<br>정말 운동을 종료하시겠습니까?</p>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" onclick="closeModal('modalEndSession')">취소</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-danger-sm" id="btnConfirmEndSession">운동 종료</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 출석 저장 -->
+<div class="modal-bg" id="modalSave">
+    <div class="modal modal-sm">
+        <div class="modal-top"><h3>출석 저장</h3><button class="btn-x" onclick="closeModal('modalSave')">&times;</button></div>
+        <div class="modal-mid">
+            <p class="modal-desc" id="saveDesc"></p>
+            <div class="att-chips" id="attChips"></div>
+        </div>
+        <div class="modal-bot">
+            <button class="btn btn-ghost-sm" onclick="closeModal('modalSave')">취소</button>
+            <button class="btn btn-save-sm" id="btnConfirmSave">저장하기</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: 게임 기록 -->
+<div class="modal-bg" id="modalGameLog">
+    <div class="modal modal-lg">
+        <div class="modal-top">
+            <h3><i data-lucide="clipboard-list"></i>금일 게임 기록</h3>
+            <div style="display:flex;gap:6px;align-items:center">
+                <button class="btn btn-primary-sm" id="btnExportGames"><i data-lucide="upload"></i>시트에 내보내기</button>
+                <button class="btn btn-primary-sm" id="btnExportAttendance"><i data-lucide="upload"></i>출석 내보내기</button>
+                <button class="btn-x" onclick="closeModal('modalGameLog')">&times;</button>
+            </div>
+        </div>
+        <div class="modal-mid">
+            <div class="log-summary" id="logSummary"></div>
+            <div class="log-list" id="logList">
+                <div style="text-align:center;padding:20px;color:var(--txt3)">아직 완료된 게임이 없습니다</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STATUS DROPDOWN (공유, JS에서 위치 조정) -->
+<div class="status-dropdown" id="statusDropdown">
+    <button class="sd-item" data-status="waiting"><i data-lucide="check"></i> 대기</button>
+    <button class="sd-item" data-status="resting"><i data-lucide="coffee"></i> 휴식</button>
+    <button class="sd-item" data-status="late"><i data-lucide="clock"></i> 늦참</button>
+</div>
+
+<div class="toast-box" id="toastBox"></div>
+<script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+<script src="app.js"></script>
+<script>
+lucide.createIcons();
+let _liQ = false;
+new MutationObserver(() => {
+    if (_liQ) return; _liQ = true;
+    requestAnimationFrame(() => { _liQ = false; if (document.querySelector('i[data-lucide]')) lucide.createIcons(); });
+}).observe(document.body, { childList: true, subtree: true });
+</script>
+</body>
+</html>

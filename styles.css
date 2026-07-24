@@ -1,0 +1,772 @@
+/* ============================================
+   버티컬 배드민턴 매칭 - White Theme v4
+   ============================================ */
+
+:root {
+    --bg0: #f0f2f5;
+    --bg1: #ffffff;
+    --bg2: #f7f8fa;
+    --bg3: #eceef2;
+    --bg-hover: #e8eaef;
+
+    --green: #35785a;
+    --green-d: #2c6349;
+    --green-bg: rgba(53,120,90,.07);
+    --green-bg2: rgba(53,120,90,.14);
+    --green-border: rgba(53,120,90,.28);
+
+    --blue: #4a6fa5;
+    --blue-bg: rgba(74,111,165,.08);
+    --amber: #9c7038;
+    --amber-bg: rgba(156,112,56,.08);
+    --red: #b04a4a;
+    --red-bg: rgba(176,74,74,.06);
+    --pink: #a05676;
+    --pink-bg: rgba(160,86,118,.08);
+    --purple: #6e6499;
+    --purple-bg: rgba(110,100,153,.08);
+
+    --txt: #1a1d27;
+    --txt2: #5a6275;
+    --txt3: #9098ad;
+
+    --brd: #e5e7ec;
+    --brd2: #d5d8e0;
+
+    --r: 5px;
+    --r-lg: 8px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+    --shadow: 0 1px 4px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,.10);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:14px; -webkit-font-smoothing:antialiased; }
+body { font-family:'Noto Sans KR','Outfit',system-ui,sans-serif; background:var(--bg0); color:var(--txt); min-height:100vh; line-height:1.5; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--brd2); border-radius:9px; }
+
+/* ========== LUCIDE ICONS ========== */
+svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-align:-.125em; }
+.btn svg.lucide { width:.95rem; height:.95rem; }
+.logo svg.lucide { width:1.15rem; height:1.15rem; color:var(--green); }
+.section-bar h2 svg.lucide, .panel-head h3 svg.lucide, .queue-head svg.lucide, .modal-top h3 svg.lucide { width:1rem; height:1rem; color:var(--txt3); }
+.modal-top h3, .queue-head > span:first-child { display:inline-flex; align-items:center; gap:7px; }
+.sd-item svg.lucide { width:.9rem; height:.9rem; margin-right:6px; color:var(--txt2); }
+.panel-toggle svg.lucide, .btn-court-toggle svg.lucide, .cc-btn svg.lucide { width:1rem; height:1rem; display:block; margin:0 auto; }
+.btn-court-toggle svg.lucide { width:.85rem; height:.85rem; transition:transform .15s; }
+
+/* ========== HEADER ========== */
+.app-header {
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; height:54px;
+    background:#fff; border-bottom:1px solid var(--brd);
+    box-shadow:var(--shadow-sm);
+}
+.header-left,.header-center,.header-right { display:flex; align-items:center; gap:10px; }
+.logo { display:flex; align-items:center; gap:8px; }
+.logo h1 { font-size:1rem; font-weight:700; color:var(--txt); }
+.logo h1 span { color:var(--green); font-weight:800; }
+.date-display { font-size:.8rem; color:var(--txt2); font-weight:500; }
+
+/* 출석 저장(내보내기) 여부 배지 N/Y */
+.att-status {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:4px 6px 4px 12px; border-radius:6px;
+    font-size:.74rem; font-weight:700; border:1px solid;
+    transition:all .2s; user-select:none;
+}
+.att-status .att-status-label { line-height:1; }
+.att-status .att-status-val {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:20px; height:20px; border-radius:4px;
+    font-size:.74rem; font-weight:800; color:#fff; line-height:1;
+}
+.att-status.no { background:var(--red-bg); color:var(--red); border-color:rgba(176,74,74,.32); }
+.att-status.no .att-status-val { background:var(--red); }
+.att-status.yes { background:var(--green-bg2); color:var(--green-d); border-color:var(--green-border); }
+.att-status.yes .att-status-val { background:var(--green); }
+
+/* ========== BUTTONS ========== */
+.btn {
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:inherit; font-weight:600; border:none; cursor:pointer;
+    border-radius:var(--r); transition:all .15s; white-space:nowrap;
+}
+.btn-sheet { padding:9px 16px; font-size:.8rem; background:#fff; color:var(--txt2); border:1px solid var(--brd2); }
+.btn-sheet:hover { border-color:var(--green); color:var(--green); background:var(--green-bg); }
+.btn-save { padding:9px 16px; font-size:.8rem; background:var(--blue); color:#fff; }
+.btn-save:hover { background:#3d5c8a; }
+.btn-ghost-sm { padding:5px 12px; font-size:.78rem; background:transparent; color:var(--txt2); border:1px solid var(--brd); border-radius:var(--r); }
+.btn-ghost-sm:hover { background:var(--bg2); color:var(--txt); }
+.btn-primary-sm { padding:6px 16px; font-size:.8rem; background:var(--green); color:#fff; font-weight:700; border-radius:var(--r); }
+.btn-primary-sm:hover { background:var(--green-d); }
+.btn-save-sm { padding:6px 16px; font-size:.8rem; background:var(--blue); color:#fff; font-weight:700; border-radius:var(--r); }
+.btn-outline-full { width:100%; justify-content:center; padding:8px 0; font-size:.8rem; background:transparent; color:var(--txt2); border:1px dashed var(--brd2); border-radius:var(--r); }
+.btn-outline-full:hover { border-color:var(--green); color:var(--green); background:var(--green-bg); }
+.btn-x { background:none; border:none; color:var(--txt3); font-size:1.5rem; cursor:pointer; padding:2px 6px; border-radius:var(--r); }
+.btn-x:hover { color:var(--txt); background:var(--bg3); }
+.btn-icon { background:none; border:none; color:var(--txt3); cursor:pointer; padding:3px; border-radius:4px; display:flex; align-items:center; transition:all .12s; }
+.btn-icon:hover { color:var(--red); background:var(--red-bg); }
+
+.badge { display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px; padding:0 6px; border-radius:5px; font-size:.7rem; font-weight:700; background:var(--green-bg2); color:var(--green); }
+
+/* ========== MAIN LAYOUT ========== */
+.app-main { display:flex; height:calc(100vh - 54px); padding:16px; gap:16px; min-width:0; }
+
+/* LEFT: 코트(top) + 매칭(bottom) — 2/3 */
+.section-left { flex:2; display:flex; flex-direction:column; gap:16px; min-height:0; min-width:0; overflow-y:auto; overflow-x:hidden; }
+
+/* RIGHT: 대기인원 — 1/3 */
+.section-right { flex:1.25; display:flex; flex-direction:column; min-height:0; min-width:0; max-width:400px; transition:all .3s ease; overflow:hidden; }
+.section-right.collapsed { flex:0; max-width:0; padding:0; opacity:0; pointer-events:none; }
+
+/* 햄버거 토글 버튼 */
+.panel-toggle {
+    flex-shrink:0; width:32px; align-self:flex-start; margin-top:8px;
+    background:#fff; border:1px solid var(--brd); border-radius:var(--r);
+    font-size:1.1rem; cursor:pointer; padding:8px 0; text-align:center;
+    color:var(--txt2); box-shadow:var(--shadow-sm); transition:all .15s;
+    line-height:1;
+}
+.panel-toggle:hover { background:var(--bg2); color:var(--green); border-color:var(--green); }
+
+/* ========== COURTS ========== */
+.section-courts { flex:0 0 auto; min-width:0; }
+.section-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.section-bar h2 { font-size:.95rem; font-weight:700; display:flex; align-items:center; gap:7px; }
+
+/* 코트 접기/펼치기 버튼 */
+.btn-court-toggle {
+    background:none; border:1px solid var(--brd); border-radius:4px;
+    font-size:.7rem; cursor:pointer; padding:2px 6px;
+    color:var(--txt3); transition:all .15s; line-height:1;
+}
+.btn-court-toggle:hover { color:var(--green); border-color:var(--green); }
+.btn-court-toggle.collapsed { transform:rotate(-90deg); }
+
+/* 코트 접혔을 때 카드 숨김 */
+.courts-row.hidden { display:none; }
+
+/* 코트 한 줄 요약 */
+.courts-summary { display:flex; gap:8px; flex-wrap:wrap; }
+.courts-summary.hidden { display:none; }
+.court-chip {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 12px; border-radius:var(--r);
+    font-size:.78rem; font-weight:600;
+    background:#fff; border:1px solid var(--brd);
+    box-shadow:var(--shadow-sm);
+}
+.court-chip .cc-name { font-weight:800; }
+.court-chip .cc-timer { font-family:'Outfit',monospace; font-weight:800; color:var(--green); }
+.court-chip .cc-type { font-size:.65rem; font-weight:700; padding:1px 6px; border-radius:8px; color:#fff; }
+.court-chip .cc-type.t-남복 { background:var(--blue); }
+.court-chip .cc-type.t-여복 { background:var(--pink); }
+.court-chip .cc-type.t-혼복 { background:var(--green); }
+.court-chip .cc-type.t-혼합 { background:var(--amber); }
+.court-chip .cc-empty { color:var(--txt3); font-size:.72rem; }
+.court-chip .cc-btn {
+    background:none; border:none; cursor:pointer; font-size:.72rem;
+    padding:2px 4px; border-radius:4px; color:var(--txt3);
+}
+.court-chip .cc-btn:hover { background:var(--bg3); color:var(--green); }
+.courts-row { display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; min-width:0; }
+
+.court-card {
+    flex:0 0 280px;
+    background:#fff; border:1px solid var(--brd);
+    border-radius:var(--r-lg); overflow:hidden;
+    box-shadow:var(--shadow);
+    transition:all .2s;
+}
+/* 게임 진행중 - 타입별 색상 */
+.court-card.active { box-shadow:var(--shadow), 0 0 0 2px var(--green-bg2); }
+.court-card.active.type-남복 { border-color:var(--blue); background:#f8fafc; }
+.court-card.active.type-여복 { border-color:var(--pink); background:#fbf8fa; }
+.court-card.active.type-혼복 { border-color:var(--green); background:#f6faf8; }
+.court-card.active.type-혼합 { border-color:var(--amber); background:#fbf9f5; }
+.court-card.active.type-자동 { border-color:var(--green); background:#f6faf8; }
+
+.court-card.active .court-top { border-bottom-color:rgba(0,0,0,.06); }
+.court-card.active.type-남복 .court-top { background:rgba(74,111,165,.06); }
+.court-card.active.type-여복 .court-top { background:rgba(160,86,118,.06); }
+.court-card.active.type-혼복 .court-top { background:rgba(53,120,90,.06); }
+.court-card.active.type-혼합 .court-top { background:rgba(156,112,56,.06); }
+.court-card.active.type-자동 .court-top { background:rgba(53,120,90,.06); }
+
+/* 진행중 상태 뱃지 타입별 색상 */
+.court-card.active.type-남복 .court-status.live { background:var(--blue-bg); color:var(--blue); }
+.court-card.active.type-여복 .court-status.live { background:var(--pink-bg); color:var(--pink); }
+.court-card.active.type-혼복 .court-status.live { background:var(--green-bg2); color:var(--green-d); }
+.court-card.active.type-혼합 .court-status.live { background:var(--amber-bg); color:var(--amber); }
+.court-card.active.type-자동 .court-status.live { background:var(--green-bg2); color:var(--green-d); }
+
+/* 진행중 타이머 색상 */
+.court-card.active.type-남복 .court-timer { color:var(--blue); }
+.court-card.active.type-여복 .court-timer { color:var(--pink); }
+.court-card.active.type-혼합 .court-timer { color:var(--amber); }
+
+.court-top {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; background:var(--bg2); border-bottom:1px solid var(--brd);
+}
+.court-name { font-weight:800; font-size:1.1rem; }
+.court-timer { font-family:'Outfit',monospace; font-size:1.2rem; color:var(--green); font-weight:800; }
+.court-status { font-size:.82rem; padding:4px 12px; border-radius:5px; font-weight:700; }
+.court-status.live { background:var(--green-bg2); color:var(--green-d); animation:pulse 2s ease infinite; }
+.court-status.empty { background:var(--bg3); color:var(--txt3); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.court-body { padding:14px; min-height:80px; }
+.court-empty { display:flex; align-items:center; justify-content:center; height:80px; color:var(--txt3); font-size:.9rem; }
+.court-game { display:flex; flex-direction:column; gap:6px; }
+.court-team { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--bg2); border-radius:var(--r); }
+.court-vs { text-align:center; font-size:.82rem; font-weight:900; color:var(--txt3); letter-spacing:.08em; padding:2px 0; }
+.team-player { display:flex; align-items:center; gap:5px; font-weight:700; font-size:.9rem; }
+
+.court-foot { display:flex; padding:10px 14px; gap:8px; border-top:1px solid var(--brd); }
+.court-foot .btn { flex:1; justify-content:center; font-size:.88rem; padding:9px 0; border-radius:var(--r); font-weight:700; }
+.court-foot .btn-end { background:transparent; color:var(--red); border:1px solid rgba(176,74,74,.25); }
+.court-foot .btn-end:hover { background:var(--red-bg); }
+.court-foot .btn-cancel { background:transparent; color:var(--txt3); border:1px solid var(--brd); }
+.court-foot .btn-cancel:hover { background:var(--bg3); color:var(--txt); }
+.court-foot .btn-start { background:var(--green); color:#fff; font-weight:700; }
+.court-foot .btn-start:hover { background:var(--green-d); }
+.court-foot .btn-start:disabled { opacity:.3; cursor:not-allowed; }
+
+/* LEVEL DOT */
+.level-dot {
+    width:9px; height:9px; border-radius:50%; display:inline-block; flex-shrink:0;
+    box-shadow:0 0 0 1.5px rgba(0,0,0,.08);
+}
+.level-dot.A { background:#b04a4a; }
+.level-dot.B { background:#bd7a4a; }
+.level-dot.C { background:#35785a; }
+.level-dot.D { background:#4a6fa5; }
+.level-dot.E { background:#6e6499; }
+
+/* ========== BOTTOM SPLIT ========== */
+/* ========== PANEL (shared) ========== */
+.panel {
+    display:flex; flex-direction:column;
+    background:#fff; border:1px solid var(--brd);
+    border-radius:var(--r-lg); min-height:0; min-width:0;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+.panel-head {
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:12px 16px; border-bottom:1px solid var(--brd);
+    background:var(--bg2);
+}
+.panel-head h3 { font-size:.9rem; font-weight:700; display:flex; align-items:center; gap:6px; }
+.panel-foot { padding:10px 14px; border-top:1px solid var(--brd); }
+
+/* ========== PLAYER PANEL (RIGHT) ========== */
+.panel-players { flex:1; }
+.section-right .panel-players { flex:1; }
+
+.search-input {
+    padding:5px 10px; font-size:.78rem; border:1px solid var(--brd);
+    border-radius:var(--r); background:#fff; color:var(--txt);
+    font-family:inherit; outline:none; width:160px;
+}
+.search-input:focus { border-color:var(--green); box-shadow:0 0 0 2px var(--green-bg); }
+
+.filter-row { display:flex; gap:4px; padding:8px 14px; border-bottom:1px solid var(--brd); }
+.chip {
+    padding:6px 13px; font-size:.72rem; font-weight:600;
+    background:var(--bg2); border:1px solid var(--brd); color:var(--txt3);
+    border-radius:6px; cursor:pointer; transition:all .12s;
+    font-family:inherit;
+}
+.chip:hover { color:var(--txt2); background:var(--bg3); }
+.chip.active { background:var(--green-bg2); border-color:var(--green-border); color:var(--green-d); font-weight:700; }
+
+.player-scroll { flex:1; overflow-y:auto; overflow-x:hidden; padding:0; }
+.player-list { display:flex; flex-direction:column; }
+
+/* 헤더 행 */
+.pr-header {
+    display:flex; align-items:center; gap:6px;
+    padding:5px 10px; background:var(--bg3); border-bottom:2px solid var(--brd2);
+    font-size:.67rem; font-weight:700; color:var(--txt3); text-transform:uppercase; letter-spacing:.03em;
+    position:sticky; top:0; z-index:2;
+}
+.pr-header span { flex-shrink:0; }
+.pr-header .h-name { flex:1; min-width:44px; }
+.pr-header .h-lv { width:24px; text-align:center; }
+.pr-header .h-gender { width:18px; text-align:center; }
+.pr-header .h-shuttle { width:18px; text-align:center; }
+.pr-header .h-games { width:24px; text-align:center; }
+.pr-header .h-rest { width:32px; text-align:center; }
+.pr-header .h-status { width:58px; text-align:center; }
+
+/* --- Player Row (pr) --- */
+.pr {
+    display:flex; align-items:center; gap:6px;
+    padding:9px 10px; cursor:pointer; transition:all .12s;
+    border-bottom:1px solid var(--brd);
+    position:relative;
+}
+.pr:hover { background:var(--bg2); }
+.pr.selected { background:var(--green-bg); }
+.pr.playing { opacity:.45; cursor:default; background:var(--blue-bg); }
+.pr.resting { opacity:.5; background:var(--amber-bg); }
+.pr.late { opacity:.4; background:var(--bg3); }
+/* 대기게임(대기열)에 편성된 인원: 선택 불가, 게임중과 동일한 느낌 */
+.pr.queued { opacity:.5; cursor:default; background:var(--purple-bg); }
+
+/* 성별 왼쪽 라인 */
+.pr.gender-male { border-left:3px solid var(--blue); }
+.pr.gender-female { border-left:3px solid var(--pink); }
+
+.pr-name-wrap { display:flex; flex-direction:column; gap:2px; min-width:44px; flex:1; overflow:hidden; }
+
+.pr-name { font-size:.88rem; font-weight:700; color:var(--txt); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.pr-lastgames { display:flex; flex-wrap:wrap; gap:2px; align-self:flex-start; }
+
+.pr-lastgame {
+    font-size:.56rem; font-weight:700; line-height:1;
+    padding:2px 3px; border-radius:3px;
+    color:#fff; opacity:.85; flex-shrink:0;
+}
+.pr-lastgame.type-male { background:var(--blue); }
+.pr-lastgame.type-female { background:var(--pink); }
+.pr-lastgame.type-mixed { background:#7a5fc4; }
+.pr-lastgame.type-special { background:#c47a4a; }
+
+.pr-lv {
+    font-size:.68rem; font-weight:800; padding:1px 5px; border-radius:3px; color:#fff; flex-shrink:0;
+}
+.pr-lv.lv-A { background:#b04a4a; }
+.pr-lv.lv-B { background:#bd7a4a; }
+.pr-lv.lv-C { background:#35785a; }
+.pr-lv.lv-D { background:#4a6fa5; }
+.pr-lv.lv-E { background:#6e6499; }
+
+.pr-gender { font-size:.72rem; font-weight:700; flex-shrink:0; }
+.pr-gender.male { color:var(--blue); }
+.pr-gender.female { color:var(--pink); }
+
+/* 콕 체크박스 */
+.pr-shuttle {
+    flex-shrink:0; width:16px; height:16px; cursor:pointer;
+    accent-color:var(--green);
+}
+
+/* 게임수 */
+.pr-games {
+    min-width:24px; height:22px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:4px; font-size:.78rem; font-weight:800;
+    background:var(--bg3); color:var(--txt3); flex-shrink:0;
+}
+.pr-games.has-games { background:var(--green); color:#fff; }
+
+/* 쉼 표시 */
+.pr-rest {
+    font-size:.65rem; font-weight:600; color:var(--txt3);
+    background:#f0f0f0; padding:0px 4px; border-radius:4px; flex-shrink:0;
+}
+.pr-rest.urgent { color:#fff; background:var(--red); }
+
+/* 상태 드롭다운 (select) */
+.pr-status-select {
+    font-size:.72rem; font-weight:600; padding:2px 3px;
+    border:1px solid var(--brd); border-radius:4px;
+    background:#fff; color:var(--txt); cursor:pointer;
+    font-family:inherit; flex-shrink:0; outline:none; max-width:60px;
+}
+.pr-status-select:focus { border-color:var(--green); }
+
+/* 삭제 버튼 */
+.pr-del {
+    background:none; border:none; color:var(--txt3); cursor:pointer;
+    font-size:.8rem; padding:1px 3px; border-radius:3px; flex-shrink:0;
+    opacity:0; transition:all .12s;
+}
+.pr:hover .pr-del { opacity:1; }
+.pr-del:hover { color:var(--red); background:var(--red-bg); }
+
+/* STATUS DROPDOWN */
+.status-dropdown {
+    position:fixed; z-index:500;
+    background:#fff; border:1px solid var(--brd2);
+    border-radius:var(--r-lg); box-shadow:var(--shadow-lg);
+    display:none; overflow:hidden; min-width:130px;
+}
+.status-dropdown.show { display:block; }
+.sd-item {
+    display:block; width:100%; text-align:left;
+    padding:12px 18px; font-size:.88rem; cursor:pointer;
+    transition:all .1s; color:var(--txt); background:none;
+    border:none; font-family:inherit; font-weight:500;
+}
+.sd-item:hover { background:var(--bg2); }
+.sd-item + .sd-item { border-top:1px solid var(--brd); }
+
+/* ========== MATCH PANEL (LEFT BOTTOM) ========== */
+/* ========== MATCH PANEL ========== */
+.panel-match { flex:1; min-height:0; display:flex; flex-direction:column; }
+
+.match-bar {
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:10px 14px; border-bottom:1px solid var(--brd);
+}
+.type-tabs { display:flex; gap:3px; }
+.type-tab {
+    padding:7px 15px; font-size:.73rem; font-weight:600;
+    background:var(--bg2); border:1px solid var(--brd); color:var(--txt3);
+    border-radius:6px; cursor:pointer; transition:all .12s;
+    font-family:inherit;
+}
+.type-tab:hover { color:var(--txt2); border-color:var(--brd2); }
+.type-tab.active { background:var(--green); border-color:var(--green); color:#fff; font-weight:700; }
+
+.rules-note { padding:8px 14px; font-size:.7rem; color:var(--txt3); line-height:1.5; border-bottom:1px solid var(--brd); background:var(--bg2); }
+.rules-note strong { color:var(--amber); }
+
+/* ========== PREVIEW ========== */
+.preview-area { padding:8px 14px; flex-shrink:1; }
+.preview-empty { display:flex; align-items:center; justify-content:center; padding:10px; text-align:center; color:var(--txt3); font-size:.72rem; line-height:1.4; border:1px dashed var(--brd2); border-radius:var(--r); background:var(--bg2); }
+.preview-game { background:var(--bg2); border:1px solid var(--green-border); border-radius:var(--r-lg); padding:14px; position:relative; }
+.preview-label { position:absolute; top:-9px; left:12px; padding:0 8px; background:var(--bg2); color:var(--green); font-size:.68rem; font-weight:700; }
+.preview-type { position:absolute; top:-9px; right:12px; padding:0 8px; background:var(--bg2); color:var(--amber); font-size:.68rem; font-weight:700; }
+.preview-teams { display:flex; align-items:center; gap:12px; }
+.preview-team { flex:1; display:flex; flex-direction:column; gap:4px; }
+.preview-team-label { font-size:.65rem; font-weight:700; color:var(--txt3); letter-spacing:.06em; margin-bottom:2px; }
+.preview-team .team-player { padding:5px 8px; background:#fff; border:1px solid var(--brd); border-radius:var(--r); font-size:.82rem; }
+.preview-vs { font-size:.88rem; font-weight:900; color:var(--txt3); }
+.preview-actions { display:flex; gap:8px; margin-top:12px; }
+.preview-actions .btn { flex:1; justify-content:center; padding:6px 0; font-size:.78rem; border-radius:var(--r); }
+.preview-selecting { display:flex; flex-direction:column; align-items:center; padding:18px; text-align:center; border:1px solid var(--green-border); border-radius:var(--r); gap:4px; background:var(--green-bg); }
+.preview-selecting .count { font-size:1.3rem; font-weight:800; color:var(--green); }
+
+/* ========== QUEUE ========== */
+.queue-area { flex:1; display:flex; flex-direction:column; min-height:0; border-top:1px solid var(--brd); }
+.queue-head { display:flex; align-items:center; gap:8px; padding:10px 14px; font-size:.88rem; font-weight:800; color:var(--txt); border-bottom:1px solid var(--brd); background:var(--bg2); }
+.queue-scroll { flex:1; overflow-y:auto; padding:8px; }
+.queue-empty { display:flex; align-items:center; justify-content:center; height:60px; color:var(--txt3); font-size:.85rem; }
+
+/* --- 대기 게임 카드 --- */
+.q-game {
+    background:#fff; border:1px solid var(--brd);
+    border-radius:var(--r-lg); margin-bottom:10px;
+    overflow:hidden; box-shadow:var(--shadow);
+    transition:all .2s;
+}
+.q-game.ready { border-left:4px solid var(--green); }
+.q-game.waiting { border-left:4px solid var(--amber); opacity:.8; }
+
+.q-game-header {
+    display:flex; align-items:center; gap:10px;
+    padding:10px 14px; background:var(--bg2);
+    border-bottom:1px solid var(--brd);
+}
+.q-game-num {
+    width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+    border-radius:6px; background:var(--green); color:#fff;
+    font-size:.8rem; font-weight:800; flex-shrink:0;
+}
+.q-game.waiting .q-game-num { background:var(--amber); }
+
+.q-game-type { font-size:.78rem; font-weight:700; padding:3px 10px; border-radius:6px; }
+.q-game-type.type-남복 { background:var(--blue-bg); color:var(--blue); }
+.q-game-type.type-여복 { background:var(--pink-bg); color:var(--pink); }
+.q-game-type.type-혼복 { background:var(--green-bg); color:var(--green); }
+.q-game-type.type-혼합,.q-game-type.type-자동 { background:var(--amber-bg); color:var(--amber); }
+
+.q-game-status { font-size:.78rem; font-weight:700; margin-left:auto; }
+.q-game-status.ready { color:var(--green); }
+.q-game-status.waiting { color:var(--amber); }
+
+.q-game-body { display:flex; align-items:center; gap:10px; padding:12px 14px; }
+.q-team { flex:1; display:flex; gap:6px; flex-wrap:wrap; }
+.q-vs { font-size:.9rem; font-weight:900; color:var(--txt3); flex-shrink:0; }
+
+.q-player {
+    display:inline-flex; align-items:center; gap:5px;
+    padding:6px 12px; border-radius:var(--r);
+    font-size:.85rem; font-weight:500;
+    background:var(--bg2); border:1px solid var(--brd);
+}
+.q-player.male { border-left:3px solid var(--blue); }
+.q-player.female { border-left:3px solid var(--pink); }
+.q-player.is-playing { opacity:.5; }
+.q-player-name { font-weight:700; font-size:.88rem; }
+.q-player-info { font-size:.72rem; color:var(--txt3); font-weight:600; }
+
+/* ========== MODALS ========== */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.3); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:1000; opacity:0; pointer-events:none; transition:opacity .2s; }
+.modal-bg.show { opacity:1; pointer-events:all; }
+.modal { background:#fff; border:1px solid var(--brd); border-radius:10px; width:92%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; box-shadow:var(--shadow-lg); transform:translateY(16px) scale(.97); transition:transform .25s cubic-bezier(.34,1.56,.64,1); }
+.modal-bg.show .modal { transform:translateY(0) scale(1); }
+.modal-sm { max-width:380px; }
+.modal-top { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--brd); background:var(--bg2); border-radius:10px 10px 0 0; }
+.modal-top h3 { font-size:.95rem; font-weight:700; }
+.modal-mid { padding:14px 18px; overflow-y:auto; flex:1; }
+.modal-desc { font-size:.8rem; color:var(--txt2); margin-bottom:12px; }
+.modal-bot { display:flex; align-items:center; gap:8px; padding:10px 18px; border-top:1px solid var(--brd); }
+
+.sheet-list { display:flex; flex-direction:column; gap:2px; max-height:380px; overflow-y:auto; }
+.sheet-item { display:flex; align-items:center; gap:8px; padding:7px 8px; border-radius:var(--r); cursor:pointer; transition:all .12s; border:1px solid transparent; }
+.sheet-item:hover { background:var(--bg2); }
+.sheet-item.checked { background:var(--green-bg); border-color:var(--green-border); }
+.sheet-item .cbox { width:17px; height:17px; border-radius:4px; border:2px solid var(--txt3); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.sheet-item.checked .cbox { background:var(--green); border-color:var(--green); }
+.sheet-item.checked .cbox::after { content:'✓'; color:#fff; font-size:.7rem; font-weight:700; }
+
+.loader { display:flex; flex-direction:column; align-items:center; gap:8px; padding:28px; color:var(--txt3); font-size:.8rem; }
+.spin { width:22px; height:22px; border:2px solid var(--brd); border-top-color:var(--green); border-radius:50%; animation:sp .6s linear infinite; }
+@keyframes sp { to{transform:rotate(360deg)} }
+
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:.75rem; font-weight:600; color:var(--txt2); margin-bottom:4px; }
+.field input, .field select { width:100%; padding:8px 12px; background:#fff; border:1px solid var(--brd2); border-radius:var(--r); color:var(--txt); font-family:inherit; font-size:.84rem; outline:none; }
+.field input:focus, .field select:focus { border-color:var(--green); box-shadow:0 0 0 2px var(--green-bg); }
+.field select { cursor:pointer; }
+.field-row { display:flex; gap:12px; }
+.field-row .field { flex:1; }
+
+.att-chips { display:flex; flex-wrap:wrap; gap:4px; max-height:180px; overflow-y:auto; }
+.att-chip { padding:3px 9px; background:var(--bg2); border:1px solid var(--brd); border-radius:5px; font-size:.75rem; }
+
+/* ========== GAME LOG MODAL ========== */
+.modal-lg { max-width:680px; }
+.btn-history { padding:9px 16px; font-size:.8rem; background:var(--amber-bg); color:var(--amber); border:1px solid rgba(156,112,56,.2); }
+.btn-history:hover { background:rgba(156,112,56,.12); }
+
+.log-summary { display:flex; gap:10px; padding:12px 0; margin-bottom:12px; border-bottom:1px solid var(--brd); flex-wrap:wrap; }
+.log-stat { display:flex; flex-direction:column; align-items:center; padding:8px 16px; background:var(--bg2); border:1px solid var(--brd); border-radius:var(--r); min-width:70px; }
+.log-stat-num { font-size:1.2rem; font-weight:800; color:var(--green); }
+.log-stat-label { font-size:.66rem; color:var(--txt3); font-weight:600; }
+
+.log-list { display:flex; flex-direction:column; gap:6px; max-height:400px; overflow-y:auto; }
+.log-item { background:var(--bg2); border:1px solid var(--brd); border-radius:var(--r); padding:10px 14px; }
+.log-item-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.log-item-num { font-size:.7rem; font-weight:700; color:var(--txt3); background:var(--bg3); padding:2px 8px; border-radius:6px; }
+.log-item-type { font-size:.68rem; font-weight:700; padding:2px 8px; border-radius:6px; }
+.log-item-type.남복 { background:var(--blue-bg); color:var(--blue); }
+.log-item-type.여복 { background:var(--pink-bg); color:var(--pink); }
+.log-item-type.혼복 { background:var(--green-bg); color:var(--green); }
+.log-item-type.혼합 { background:var(--amber-bg); color:var(--amber); }
+.log-item-time { font-size:.68rem; color:var(--txt3); }
+.log-item-court { font-size:.68rem; color:var(--txt2); font-weight:600; }
+
+.log-teams { display:flex; align-items:center; gap:10px; }
+.log-team { flex:1; display:flex; gap:4px; flex-wrap:wrap; }
+.log-player { font-size:.78rem; padding:2px 8px; background:#fff; border:1px solid var(--brd); border-radius:6px; display:flex; align-items:center; gap:3px; }
+.log-vs { font-size:.7rem; font-weight:800; color:var(--txt3); flex-shrink:0; }
+
+/* ========== TOAST ========== */
+.toast-box { position:fixed; bottom:16px; right:16px; z-index:2000; display:flex; flex-direction:column; gap:6px; }
+.toast { padding:10px 16px; background:#fff; border:1px solid var(--brd); border-radius:var(--r); font-size:.8rem; font-weight:500; box-shadow:var(--shadow-lg); animation:tin .25s cubic-bezier(.34,1.56,.64,1); }
+.toast.ok { border-left:3px solid var(--green); }
+.toast.err { border-left:3px solid var(--red); }
+.toast.info { border-left:3px solid var(--blue); }
+@keyframes tin { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+
+
+/* ========== RESPONSIVE ========== */
+
+/* TABLET LANDSCAPE (max 1200px) */
+@media(max-width:1200px) {
+    html { font-size:12.5px; }
+    .app-main { height:calc(100vh - 54px); padding:10px; gap:10px; }
+    .section-left { overflow-y:auto; gap:10px; }
+    .section-right { max-width:280px; }
+
+    /* 코트 컴팩트 */
+    .section-bar { margin-bottom:6px; }
+    .section-bar h2 { font-size:.85rem; }
+    .courts-row { gap:8px; }
+    .court-card { flex:0 0 220px; }
+    .court-top { padding:8px 12px; }
+    .court-name { font-size:.85rem; }
+    .court-timer { font-size:.9rem; }
+    .court-status { font-size:.68rem; padding:3px 8px; }
+    .court-body { padding:6px 10px; min-height:auto; }
+    .court-empty { height:36px; font-size:.78rem; }
+    .court-game { gap:3px; }
+    .court-team { padding:4px 6px; gap:4px; }
+    .court-vs { font-size:.7rem; padding:1px 0; }
+    .team-player { font-size:.75rem; gap:3px; }
+    .team-player strong { font-size:.75rem; }
+    .team-player .pc-lv { font-size:.5rem !important; padding:0px 3px !important; }
+    .court-foot { padding:6px 10px; gap:4px; }
+    .court-foot .btn { font-size:.7rem; padding:5px 0; }
+
+    /* 매칭 패널 컴팩트 */
+    .panel-head { padding:8px 12px; }
+    .panel-head h3 { font-size:.82rem; }
+    .match-bar { padding:6px 10px; gap:6px; }
+    .type-tab { padding:4px 10px; font-size:.65rem; }
+    .rules-note { padding:4px 10px; font-size:.6rem; }
+
+    /* 미리보기 극소화 */
+    .preview-area { padding:4px 10px; }
+    .preview-empty { padding:6px; font-size:.62rem; }
+    .preview-game { padding:8px; }
+    .preview-label, .preview-type { font-size:.58rem; top:-7px; }
+    .preview-team .team-player { padding:3px 6px; font-size:.72rem; }
+    .preview-vs { font-size:.72rem; }
+    .preview-selecting { padding:10px; }
+    .preview-selecting .count { font-size:1rem; }
+
+    /* 대기게임 영역 최대화 */
+    .queue-area { min-height:0; flex:1; }
+    .queue-head { padding:6px 10px; font-size:.78rem; }
+    .queue-scroll { padding:6px; }
+    .q-game { margin-bottom:6px; }
+    .q-game-header { padding:6px 10px; }
+    .q-game-num { min-width:22px; height:22px; font-size:.72rem; }
+    .q-game-type { font-size:.62rem; padding:2px 8px; }
+    .q-game-status { font-size:.6rem; }
+    .q-game-body { padding:6px 10px; gap:6px; }
+    .q-player { padding:3px 6px; font-size:.7rem; }
+    .q-player-name { font-size:.72rem; }
+    .q-vs { font-size:.68rem; }
+
+    /* 대기인원 컴팩트 */
+    .pr { padding:5px 8px; gap:5px; }
+    .pr-name { font-size:.75rem; }
+    .pr-lv { font-size:.55rem; padding:1px 4px; }
+    .pr-status-select { font-size:.6rem; max-width:46px; }
+}
+
+/* TABLET (max 1024px) */
+@media(max-width:1024px) {
+    html { font-size:12px; }
+    .court-card { flex:0 0 200px; }
+    .court-top { padding:6px 10px; }
+    .court-name { font-size:.8rem; }
+    .court-timer { font-size:.85rem; }
+    .court-team { padding:3px 5px; }
+    .team-player { font-size:.7rem; }
+    .court-foot .btn { font-size:.65rem; padding:4px 0; }
+    .type-tab { padding:3px 8px; font-size:.6rem; }
+    .preview-empty { padding:4px; font-size:.58rem; }
+    .queue-head { padding:5px 8px; font-size:.72rem; }
+    .q-game-body { padding:4px 8px; gap:4px; }
+    .q-player { padding:2px 5px; font-size:.65rem; }
+    .q-player-name { font-size:.68rem; }
+}
+
+/* MOBILE (max 768px) */
+@media(max-width:768px) {
+    html { font-size:12px; }
+    .app-header { padding:0 10px; height:48px; }
+    .header-center { display:none; }
+    .header-right { gap:5px; }
+    .header-right .btn { padding:5px 10px; font-size:.72rem; }
+    .app-main { padding:8px; gap:10px; }
+    .section-bar h2 { font-size:.88rem; }
+    .courts-row { gap:8px; padding-bottom:8px; }
+    .court-card { flex:0 0 270px; }
+    .court-name { font-size:.9rem; }
+    .court-timer { font-size:.95rem; }
+    .court-status { font-size:.7rem; padding:3px 9px; }
+    .court-body { padding:12px; min-height:80px; }
+    .court-team { padding:8px 10px; font-size:.85rem; }
+    .team-player { font-size:.85rem; }
+    .court-foot .btn { font-size:.8rem; padding:8px 0; }
+    .panel-players { min-height:250px; }
+    .panel-match { min-height:350px; }
+    .panel-head { padding:10px 12px; }
+    .panel-head h3 { font-size:.85rem; }
+    .pc { width:calc(50% - 4px); padding:8px 10px; }
+    .pc-name { font-size:.88rem; }
+    .pc-game-badge { min-width:24px; height:24px; font-size:.78rem; }
+    .pc-shuttle { width:24px; height:24px; font-size:.78rem; }
+    .player-list { gap:6px; }
+    .filter-row { padding:6px 10px; gap:3px; overflow-x:auto; flex-wrap:nowrap; }
+    .chip { padding:4px 10px; font-size:.7rem; flex-shrink:0; }
+    .match-bar { flex-direction:column; align-items:stretch; gap:8px; padding:8px 12px; }
+    .type-tabs { flex-wrap:wrap; gap:4px; }
+    .type-tab { padding:5px 12px; font-size:.7rem; }
+    .rules-note { font-size:.68rem; padding:6px 10px; }
+    .preview-area { padding:8px 10px; }
+    .preview-teams { flex-direction:column; gap:8px; }
+    .queue-head { font-size:.88rem; padding:10px 12px; }
+    .q-game-body { flex-direction:column; gap:6px; padding:10px 12px; }
+    .q-vs { font-size:.78rem; }
+    .q-player { font-size:.78rem; padding:5px 10px; }
+    .q-player-name { font-size:.82rem; }
+    .search-input { width:120px; font-size:.74rem; }
+    .modal { width:96%; max-height:85vh; }
+    .modal-lg { max-width:100%; }
+}
+
+/* SMALL MOBILE (max 480px) */
+@media(max-width:480px) {
+    html { font-size:11.5px; }
+    .app-header { height:44px; }
+    .logo h1 { font-size:.85rem; }
+    .header-right .btn-history, .header-right .btn-save { font-size:.65rem; padding:4px 7px; }
+    .court-card { flex:0 0 250px; }
+    .court-name { font-size:.85rem; }
+    .court-timer { font-size:.88rem; }
+    .court-body { padding:10px; min-height:70px; }
+    .court-team { padding:6px 8px; font-size:.78rem; }
+    .team-player { font-size:.78rem; }
+    .pc { width:calc(50% - 4px); padding:6px 8px; }
+    .pc-name { font-size:.8rem; }
+    .pc-tags { gap:3px; }
+    .pc-lv { font-size:.58rem; padding:1px 4px; }
+    .pc-gender { font-size:.58rem; padding:1px 4px; }
+    .pc-status { font-size:.58rem; padding:2px 6px; }
+    .pc-game-badge { min-width:22px; height:22px; font-size:.72rem; }
+    .pc-shuttle { width:22px; height:22px; font-size:.72rem; }
+    .q-game-header { padding:8px 10px; }
+    .q-game-num { width:24px; height:24px; font-size:.7rem; }
+    .q-player-name { font-size:.75rem; }
+    .q-player-info { font-size:.62rem; }
+    .match-bar { padding:6px 10px; }
+    .panel-foot { padding:8px 10px; }
+}
+
+/* ============================================
+   추가 기능 스타일 (매칭 규칙 선택 / 삭제·초기화 모달)
+   ============================================ */
+
+/* 매칭 규칙 선택 바 */
+.rule-selector {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:8px 14px; background:var(--bg2); border-bottom:1px solid var(--brd); flex-wrap:wrap;
+}
+.rule-tabs { display:flex; gap:4px; }
+.rule-tab {
+    padding:5px 11px; font-size:.72rem; font-weight:600; cursor:pointer;
+    background:#fff; color:var(--txt2); border:1px solid var(--brd2); border-radius:var(--r);
+    transition:all .12s;
+}
+.rule-tab:hover { color:var(--purple); border-color:var(--purple); }
+.rule-tab.active { background:var(--purple); border-color:var(--purple); color:#fff; }
+.rule-rest-ctrl { display:flex; align-items:center; gap:7px; font-size:.7rem; color:var(--txt2); font-weight:600; }
+.rule-rest-ctrl input[type=range] { width:96px; accent-color:var(--purple); cursor:pointer; }
+.rule-rest-ctrl #restThresholdVal { font-weight:800; color:var(--purple); min-width:42px; text-align:right; }
+
+/* 초기화 버튼 (헤더) */
+.btn-reset { padding:9px 12px; font-size:.78rem; background:#fff; color:var(--txt3); border:1px solid var(--brd2); }
+.btn-reset:hover { color:var(--red); border-color:var(--red); background:var(--red-bg); }
+
+/* 위험 작업 확인 모달 (삭제 / 초기화) */
+.del-warn { background:var(--red-bg); border:1px solid rgba(176,74,74,.22); border-radius:var(--r-lg); padding:14px; text-align:center; }
+.del-warn .del-name { font-size:1.15rem; font-weight:800; color:var(--txt); }
+.del-warn .del-info { font-size:.78rem; color:var(--txt2); margin-top:4px; }
+.del-warn .del-msg { font-size:.8rem; color:var(--red); margin-top:8px; font-weight:600; line-height:1.5; }
+.btn-danger-sm { padding:6px 18px; font-size:.8rem; background:var(--red); color:#fff; font-weight:700; border-radius:var(--r); }
+.btn-danger-sm:hover { background:#964040; }
+
+@media (max-width:768px) {
+    .rule-selector { padding:6px 10px; gap:6px; }
+    .rule-tab { padding:5px 9px; font-size:.68rem; }
+    .rule-rest-ctrl input[type=range] { width:80px; }
+    .header-right .btn-reset { font-size:.65rem; padding:4px 8px; }
+}
