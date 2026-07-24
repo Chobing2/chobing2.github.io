@@ -44,7 +44,7 @@
 html { font-size:14px; -webkit-font-smoothing:antialiased; }
 body { font-family:'Noto Sans KR','Outfit',system-ui,sans-serif; background:var(--bg0); color:var(--txt); min-height:100vh; line-height:1.5; }
 
-::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--brd2); border-radius:9px; }
 
