@@ -146,7 +146,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 
 /* ========== COURTS ========== */
 .section-courts { flex:0 0 auto; min-width:0; }
-.section-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.section-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
 .section-bar h2 { font-size:.95rem; font-weight:700; display:flex; align-items:center; gap:7px; }
 
 /* 코트 접기/펼치기 버튼 */
@@ -184,10 +184,10 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     padding:2px 4px; border-radius:4px; color:var(--txt3);
 }
 .court-chip .cc-btn:hover { background:var(--bg3); color:var(--green); }
-.courts-row { display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; min-width:0; }
+.courts-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; min-width:0; }
 
 .court-card {
-    flex:0 0 280px;
+    flex:0 0 230px;
     background:#fff; border:1px solid var(--brd);
     border-radius:var(--r-lg); overflow:hidden;
     box-shadow:var(--shadow);
@@ -281,7 +281,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 }
 .panel-head {
     display:flex; align-items:center; justify-content:space-between; gap:8px;
-    padding:12px 16px; border-bottom:1px solid var(--brd);
+    padding:8px 14px; border-bottom:1px solid var(--brd);
     background:var(--bg2);
 }
 .panel-head h3 { font-size:.9rem; font-weight:700; display:flex; align-items:center; gap:6px; }
@@ -299,9 +299,9 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .section-left .panel-players { flex:1; min-height:0; }
 .search-input:focus { border-color:var(--green); box-shadow:0 0 0 2px var(--green-bg); }
 
-.filter-row { display:flex; gap:4px; padding:8px 14px; border-bottom:1px solid var(--brd); }
+.filter-row { display:flex; gap:4px; padding:5px 10px; border-bottom:1px solid var(--brd); }
 .chip {
-    padding:6px 13px; font-size:.72rem; font-weight:600;
+    padding:4px 10px; font-size:.68rem; font-weight:600;
     background:var(--bg2); border:1px solid var(--brd); color:var(--txt3);
     border-radius:6px; cursor:pointer; transition:all .12s;
     font-family:inherit;
