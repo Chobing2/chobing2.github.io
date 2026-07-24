@@ -275,9 +275,9 @@ function showSaveModal() {
 
 async function confirmSave() {
     const played = S.players.filter(p => p.gameCount > 0);
-    const d = new Date();
-    const ds = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
     if (!CONFIG.APPS_SCRIPT_URL) {
+        const d = new Date();
+        const ds = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
         console.log('=== 출석 ===', ds);
         played.forEach(p => console.log(`${p.name}|${p.level}|${p.gender}|${p.gameCount}게임`));
         toast('Apps Script URL 미설정. 콘솔에 기록됨.', 'info');
@@ -285,6 +285,13 @@ async function confirmSave() {
         return;
     }
     closeModal('modalSave');
+    await saveAttendanceToSheet(played);
+}
+
+// '출석 저장' 버튼과 '운동 종료' 양쪽에서 공용으로 쓰는 출석기록 탭 저장 로직
+async function saveAttendanceToSheet(played) {
+    const d = new Date();
+    const ds = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
     showLoading('출석 내보내는 중...');
     try {
         await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'saveAttendance',date:ds,players:played.map(p=>({name:p.name,level:p.level,gender:p.gender,gameCount:p.gameCount}))}) });
@@ -1402,49 +1409,7 @@ async function exportGamesToSheet() {
     }
 }
 
-// 출석 기록을 참가자 시트에 내보내기 (참석일자/참석수 업데이트)
-let _exportingAttendance = false;
 let _attendanceExported = false; // 오늘 출석 내보내기 완료 여부
-async function exportAttendanceToSheet() {
-    if (_exportingAttendance) { toast('내보내기 진행중...', 'info'); return; }
-    if (_attendanceExported) {
-        if (!confirm('이미 오늘 출석을 내보냈습니다. 다시 내보내시겠습니까?\n(중복 기록될 수 있습니다)')) return;
-    }
-
-    const played = S.players.filter(p => p.gameCount > 0);
-    if (!played.length) { toast('참여 인원이 없습니다', 'err'); return; }
-    const today = new Date();
-    const ds = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getDate().toString().padStart(2,'0')}`;
-
-    if (!CONFIG.APPS_SCRIPT_URL) {
-        console.log('=== 출석 내보내기 ===');
-        console.log('날짜:', ds);
-        played.forEach(p => console.log(`${p.name} | ${p.gameCount}게임`));
-        toast('Apps Script URL 미설정. README를 참고하세요. (콘솔에 기록됨)', 'info');
-        return;
-    }
-
-    _exportingAttendance = true;
-    showLoading('출석 내보내는 중...');
-
-    try {
-        const payload = {
-            action: 'updateAttendance',
-            date: ds,
-            players: played.map(p => ({ name:p.name, gameCount:p.gameCount }))
-        };
-        await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-        _attendanceExported = true;
-        refreshAttExportStatus();
-        saveState();
-        toast(`출석 ${played.length}명 시트 내보내기 완료!`, 'ok');
-    } catch(e) {
-        toast('출석 내보내기 실패: ' + e.message, 'err');
-    } finally {
-        _exportingAttendance = false;
-        hideLoading();
-    }
-}
 
 // ============ COURT TOGGLE ============
 let courtsCollapsed = false;
@@ -1772,7 +1737,8 @@ function showEndSessionModal() {
 }
 async function doEndSession() {
     if (confirm('출석 저장 / 게임 기록 내보내기도 같이 진행할까요?')) {
-        await exportAttendanceToSheet();
+        const played = S.players.filter(p => p.gameCount > 0);
+        if (played.length && CONFIG.APPS_SCRIPT_URL) await saveAttendanceToSheet(played);
         await exportGamesToSheet();
     }
     // 위 내보내기 과정에서 걸린 saveState()가 뒤늦게(1500ms 디바운스 + GAS 지연) 도착해
