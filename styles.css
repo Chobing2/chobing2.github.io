@@ -359,7 +359,8 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 
 .pr-name { font-size:.88rem; font-weight:700; color:var(--txt); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-.pr-lastgames { display:flex; flex-wrap:wrap; gap:4px; }
+.pr-lastgames { display:flex; flex-wrap:nowrap; gap:4px; overflow-x:auto; padding-bottom:2px; }
+.pr-lastgames::-webkit-scrollbar { height:3px; }
 
 .pr-lastgame {
     font-size:.66rem; font-weight:700; line-height:1;

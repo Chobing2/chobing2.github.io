@@ -1109,7 +1109,7 @@ function playerChip(p, name) {
 }
 
 function showPlayerGames(name, idx) {
-    const g = getLastGames(name, 5)[idx];
+    const g = getLastGames(name, Infinity)[idx];
     $('#playerGamesTitle').textContent = `${name} · 게임 상세`;
     const list = $('#playerGamesList');
     if (!g) {
@@ -1178,7 +1178,7 @@ function renderPlayers() {
             const restVal = (p.status === 'waiting' || p.status === 'playing') ? p.restCount : '-';
             const restCls = (p.restCount >= CONFIG.MAX_REST && p.status === 'waiting') ? 'urgent' : '';
             const typeClsMap = { '남복':'male', '여복':'female', '혼복':'mixed', '혼합':'special' };
-            const lastTypes = getLastGameTypes(p.name, 5);
+            const lastTypes = getLastGameTypes(p.name, Infinity);
             return `
             <div class="pr ${p.selected?'selected':''} ${p.status} ${isQueued?'queued':''} gender-${genderCls}" onclick="toggleSelect('${p.id}')">
                 <span class="pr-main">
