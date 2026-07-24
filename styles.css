@@ -337,11 +337,12 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 
 /* --- Player Row (pr) --- */
 .pr {
-    display:flex; align-items:center; gap:6px;
+    display:flex; flex-direction:column; gap:6px;
     padding:9px 18px 9px 10px; cursor:pointer; transition:all .12s;
     border-bottom:1px solid var(--brd);
     position:relative;
 }
+.pr-main { display:flex; align-items:center; gap:6px; width:100%; }
 .pr:hover { background:var(--bg2); }
 .pr.selected { background:var(--green-bg); }
 .pr.playing { opacity:.45; cursor:default; background:var(--blue-bg); }
@@ -354,11 +355,11 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr.gender-male { border-left:3px solid var(--blue); }
 .pr.gender-female { border-left:3px solid var(--pink); }
 
-.pr-name-wrap { display:flex; flex-direction:column; gap:10px; min-width:44px; flex:1; overflow:hidden; }
+.pr-name-wrap { display:flex; min-width:44px; flex:1; overflow:hidden; }
 
 .pr-name { font-size:.88rem; font-weight:700; color:var(--txt); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-.pr-lastgames { display:flex; flex-wrap:wrap; gap:2px; align-self:flex-start; }
+.pr-lastgames { display:flex; flex-wrap:wrap; gap:4px; }
 
 .pr-lastgame {
     font-size:.66rem; font-weight:700; line-height:1;

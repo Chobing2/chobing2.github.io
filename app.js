@@ -1147,22 +1147,24 @@ function renderPlayers() {
             const lastTypes = getLastGameTypes(p.name, 5);
             return `
             <div class="pr ${p.selected?'selected':''} ${p.status} ${isQueued?'queued':''} gender-${genderCls}" onclick="toggleSelect('${p.id}')">
-                <span class="pr-name-wrap">
-                    <span class="pr-name">${p.name}</span>
-                    ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map((t,idx) => `<span class="pr-lastgame type-${typeClsMap[t]||''}" onclick="event.stopPropagation();showPlayerGames('${p.name}',${idx})" title="클릭하면 매칭 상대 확인">${t}</span>`).join('')}</span>` : ''}
+                <span class="pr-main">
+                    <span class="pr-name-wrap">
+                        <span class="pr-name">${p.name}</span>
+                    </span>
+                    <span class="pr-lv lv-${p.level}">${p.level}</span>
+                    <span class="pr-gender ${genderCls}">${p.gender}</span>
+                    <input type="checkbox" class="pr-shuttle" ${p.shuttle?'checked':''} onclick="event.stopPropagation();toggleShuttle('${p.id}',event)" title="셔틀콕 제출">
+                    <span class="pr-games${p.gameCount > 0 ? ' has-games' : ''}">${p.gameCount}</span>
+                    <span class="pr-rest ${restCls}">${restVal}쉼</span>
+                    <select class="pr-status-select" onclick="event.stopPropagation()" onchange="changeStatusDirect('${p.id}',this.value)">
+                        <option value="waiting" ${p.status==='waiting'?'selected':''}>대기</option>
+                        <option value="playing" ${p.status==='playing'?'selected':''} disabled>게임중</option>
+                        <option value="resting" ${p.status==='resting'?'selected':''}>휴식</option>
+                        <option value="late" ${p.status==='late'?'selected':''}>늦참</option>
+                    </select>
+                    ${p.status!=='playing'?`<button class="pr-del" onclick="event.stopPropagation();confirmRemovePlayer('${p.id}')">×</button>`:''}
                 </span>
-                <span class="pr-lv lv-${p.level}">${p.level}</span>
-                <span class="pr-gender ${genderCls}">${p.gender}</span>
-                <input type="checkbox" class="pr-shuttle" ${p.shuttle?'checked':''} onclick="event.stopPropagation();toggleShuttle('${p.id}',event)" title="셔틀콕 제출">
-                <span class="pr-games${p.gameCount > 0 ? ' has-games' : ''}">${p.gameCount}</span>
-                <span class="pr-rest ${restCls}">${restVal}쉼</span>
-                <select class="pr-status-select" onclick="event.stopPropagation()" onchange="changeStatusDirect('${p.id}',this.value)">
-                    <option value="waiting" ${p.status==='waiting'?'selected':''}>대기</option>
-                    <option value="playing" ${p.status==='playing'?'selected':''} disabled>게임중</option>
-                    <option value="resting" ${p.status==='resting'?'selected':''}>휴식</option>
-                    <option value="late" ${p.status==='late'?'selected':''}>늦참</option>
-                </select>
-                ${p.status!=='playing'?`<button class="pr-del" onclick="event.stopPropagation();confirmRemovePlayer('${p.id}')">×</button>`:''}
+                ${lastTypes.length ? `<span class="pr-lastgames">${lastTypes.map((t,idx) => `<span class="pr-lastgame type-${typeClsMap[t]||''}" onclick="event.stopPropagation();showPlayerGames('${p.name}',${idx})" title="클릭하면 매칭 상대 확인">${t}</span>`).join('')}</span>` : ''}
             </div>`;
         }).join('');
     }
