@@ -3,32 +3,32 @@
    ============================================ */
 
 :root {
-    --bg0: #f0f2f5;
+    --bg0: #eef0f4;
     --bg1: #ffffff;
     --bg2: #f7f8fa;
     --bg3: #eceef2;
     --bg-hover: #e8eaef;
 
-    --green: #35785a;
-    --green-d: #2c6349;
-    --green-bg: rgba(53,120,90,.07);
-    --green-bg2: rgba(53,120,90,.14);
-    --green-border: rgba(53,120,90,.28);
+    --green: #1f8a5f;
+    --green-d: #187350;
+    --green-bg: rgba(31,138,95,.07);
+    --green-bg2: rgba(31,138,95,.14);
+    --green-border: rgba(31,138,95,.3);
 
-    --blue: #4a6fa5;
-    --blue-bg: rgba(74,111,165,.08);
-    --amber: #9c7038;
-    --amber-bg: rgba(156,112,56,.08);
-    --red: #b04a4a;
-    --red-bg: rgba(176,74,74,.06);
-    --pink: #a05676;
-    --pink-bg: rgba(160,86,118,.08);
-    --purple: #6e6499;
-    --purple-bg: rgba(110,100,153,.08);
+    --blue: #3670c0;
+    --blue-bg: rgba(54,112,192,.08);
+    --amber: #c07d28;
+    --amber-bg: rgba(192,125,40,.08);
+    --red: #cc3f3f;
+    --red-bg: rgba(204,63,63,.06);
+    --pink: #c04a7d;
+    --pink-bg: rgba(192,74,125,.08);
+    --purple: #7a5fc0;
+    --purple-bg: rgba(122,95,192,.08);
 
     --txt: #1a1d27;
-    --txt2: #5a6275;
-    --txt3: #9098ad;
+    --txt2: #4b5468;
+    --txt3: #7e879e;
 
     --brd: #e5e7ec;
     --brd2: #d5d8e0;
@@ -85,7 +85,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     width:20px; height:20px; border-radius:4px;
     font-size:.74rem; font-weight:800; color:#fff; line-height:1;
 }
-.att-status.no { background:var(--red-bg); color:var(--red); border-color:rgba(176,74,74,.32); }
+.att-status.no { background:var(--red-bg); color:var(--red); border-color:rgba(204,63,63,.32); }
 .att-status.no .att-status-val { background:var(--red); }
 .att-status.yes { background:var(--green-bg2); color:var(--green-d); border-color:var(--green-border); }
 .att-status.yes .att-status-val { background:var(--green); }
@@ -109,7 +109,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .btn-sheet { padding:9px 16px; font-size:.8rem; background:#fff; color:var(--txt2); border:1px solid var(--brd2); }
 .btn-sheet:hover { border-color:var(--green); color:var(--green); background:var(--green-bg); }
 .btn-save { padding:9px 16px; font-size:.8rem; background:var(--blue); color:#fff; }
-.btn-save:hover { background:#3d5c8a; }
+.btn-save:hover { background:#2c5da0; }
 .btn-ghost-sm { padding:5px 12px; font-size:.78rem; background:transparent; color:var(--txt2); border:1px solid var(--brd); border-radius:var(--r); }
 .btn-ghost-sm:hover { background:var(--bg2); color:var(--txt); }
 .btn-primary-sm { padding:6px 16px; font-size:.8rem; background:var(--green); color:#fff; font-weight:700; border-radius:var(--r); }
@@ -202,11 +202,11 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .court-card.active.type-자동 { border-color:var(--green); background:#f6faf8; }
 
 .court-card.active .court-top { border-bottom-color:rgba(0,0,0,.06); }
-.court-card.active.type-남복 .court-top { background:rgba(74,111,165,.06); }
-.court-card.active.type-여복 .court-top { background:rgba(160,86,118,.06); }
-.court-card.active.type-혼복 .court-top { background:rgba(53,120,90,.06); }
-.court-card.active.type-혼합 .court-top { background:rgba(156,112,56,.06); }
-.court-card.active.type-자동 .court-top { background:rgba(53,120,90,.06); }
+.court-card.active.type-남복 .court-top { background:rgba(54,112,192,.06); }
+.court-card.active.type-여복 .court-top { background:rgba(192,74,125,.06); }
+.court-card.active.type-혼복 .court-top { background:rgba(31,138,95,.06); }
+.court-card.active.type-혼합 .court-top { background:rgba(192,125,40,.06); }
+.court-card.active.type-자동 .court-top { background:rgba(31,138,95,.06); }
 
 /* 진행중 상태 뱃지 타입별 색상 */
 .court-card.active.type-남복 .court-status.live { background:var(--blue-bg); color:var(--blue); }
@@ -251,7 +251,7 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 
 .court-foot { display:flex; padding:10px 14px; gap:8px; border-top:1px solid var(--brd); }
 .court-foot .btn { flex:1; justify-content:center; font-size:.88rem; padding:9px 0; border-radius:var(--r); font-weight:700; }
-.court-foot .btn-end { background:transparent; color:var(--red); border:1px solid rgba(176,74,74,.25); }
+.court-foot .btn-end { background:transparent; color:var(--red); border:1px solid rgba(204,63,63,.25); }
 .court-foot .btn-end:hover { background:var(--red-bg); }
 .court-foot .btn-cancel { background:transparent; color:var(--txt3); border:1px solid var(--brd); }
 .court-foot .btn-cancel:hover { background:var(--bg3); color:var(--txt); }
@@ -264,11 +264,11 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
     width:9px; height:9px; border-radius:50%; display:inline-block; flex-shrink:0;
     box-shadow:0 0 0 1.5px rgba(0,0,0,.08);
 }
-.level-dot.A { background:#b04a4a; }
-.level-dot.B { background:#bd7a4a; }
-.level-dot.C { background:#35785a; }
-.level-dot.D { background:#4a6fa5; }
-.level-dot.E { background:#6e6499; }
+.level-dot.A { background:#cc3f3f; }
+.level-dot.B { background:#d07a2e; }
+.level-dot.C { background:#1f8a5f; }
+.level-dot.D { background:#3670c0; }
+.level-dot.E { background:#7a5fc0; }
 
 /* ========== BOTTOM SPLIT ========== */
 /* ========== PANEL (shared) ========== */
@@ -377,11 +377,11 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .pr-lv {
     font-size:.68rem; font-weight:800; padding:2px 0; width:24px; text-align:center; border-radius:3px; color:#fff; flex-shrink:0;
 }
-.pr-lv.lv-A { background:#b04a4a; }
-.pr-lv.lv-B { background:#bd7a4a; }
-.pr-lv.lv-C { background:#35785a; }
-.pr-lv.lv-D { background:#4a6fa5; }
-.pr-lv.lv-E { background:#6e6499; }
+.pr-lv.lv-A { background:#cc3f3f; }
+.pr-lv.lv-B { background:#d07a2e; }
+.pr-lv.lv-C { background:#1f8a5f; }
+.pr-lv.lv-D { background:#3670c0; }
+.pr-lv.lv-E { background:#7a5fc0; }
 
 .pr-gender { font-size:.72rem; font-weight:700; flex-shrink:0; width:18px; text-align:center; }
 .pr-gender.male { color:var(--blue); }
@@ -556,6 +556,20 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .sheet-item.checked .cbox { background:var(--green); border-color:var(--green); }
 .sheet-item.checked .cbox::after { content:'✓'; color:#fff; font-size:.7rem; font-weight:700; }
 
+.sheet-lv {
+    font-size:.68rem; font-weight:800; width:22px; text-align:center; padding:2px 0;
+    border-radius:3px; color:#fff; flex-shrink:0;
+}
+.sheet-lv.lv-A { background:#cc3f3f; }
+.sheet-lv.lv-B { background:#d07a2e; }
+.sheet-lv.lv-C { background:#1f8a5f; }
+.sheet-lv.lv-D { background:#3670c0; }
+.sheet-lv.lv-E { background:#7a5fc0; }
+
+.sheet-gender { font-size:.72rem; font-weight:800; flex-shrink:0; width:16px; text-align:center; }
+.sheet-gender.male { color:var(--blue); }
+.sheet-gender.female { color:var(--pink); }
+
 .loader { display:flex; flex-direction:column; align-items:center; gap:8px; padding:28px; color:var(--txt3); font-size:.8rem; }
 .spin { width:22px; height:22px; border:2px solid var(--brd); border-top-color:var(--green); border-radius:50%; animation:sp .6s linear infinite; }
 @keyframes sp { to{transform:rotate(360deg)} }
@@ -573,8 +587,8 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 
 /* ========== GAME LOG MODAL ========== */
 .modal-lg { max-width:680px; }
-.btn-history { padding:9px 16px; font-size:.8rem; background:var(--amber-bg); color:var(--amber); border:1px solid rgba(156,112,56,.2); }
-.btn-history:hover { background:rgba(156,112,56,.12); }
+.btn-history { padding:9px 16px; font-size:.8rem; background:var(--amber-bg); color:var(--amber); border:1px solid rgba(192,125,40,.22); }
+.btn-history:hover { background:rgba(192,125,40,.12); }
 
 .log-summary { display:flex; gap:10px; padding:12px 0; margin-bottom:12px; border-bottom:1px solid var(--brd); flex-wrap:wrap; }
 .log-stat { display:flex; flex-direction:column; align-items:center; padding:8px 16px; background:var(--bg2); border:1px solid var(--brd); border-radius:var(--r); min-width:70px; }
@@ -822,12 +836,12 @@ svg.lucide { width:1em; height:1em; stroke-width:2; flex-shrink:0; vertical-alig
 .btn-reset:hover { color:var(--red); border-color:var(--red); background:var(--red-bg); }
 
 /* 위험 작업 확인 모달 (삭제 / 초기화) */
-.del-warn { background:var(--red-bg); border:1px solid rgba(176,74,74,.22); border-radius:var(--r-lg); padding:14px; text-align:center; }
+.del-warn { background:var(--red-bg); border:1px solid rgba(204,63,63,.22); border-radius:var(--r-lg); padding:14px; text-align:center; }
 .del-warn .del-name { font-size:1.15rem; font-weight:800; color:var(--txt); }
 .del-warn .del-info { font-size:.78rem; color:var(--txt2); margin-top:4px; }
 .del-warn .del-msg { font-size:.8rem; color:var(--red); margin-top:8px; font-weight:600; line-height:1.5; }
 .btn-danger-sm { padding:6px 18px; font-size:.8rem; background:var(--red); color:#fff; font-weight:700; border-radius:var(--r); }
-.btn-danger-sm:hover { background:#964040; }
+.btn-danger-sm:hover { background:#b23434; }
 
 @media (max-width:768px) {
     .rule-selector { padding:6px 10px; gap:6px; }
