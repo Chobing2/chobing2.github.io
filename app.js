@@ -14,6 +14,7 @@ const CONFIG = {
     SHEET_ID: '13a8PaYF_DtxtqjIx9ByWOMDZAZjIMJNXWjQP21RpM-U',
     SHEET_TAB: '참가자',
     GAME_LOG_TAB: '게임매칭',
+    ATT_LOG_TAB: '출석기록',
     STATE_TAB: '상태',
     APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwkn8rg-pFcnaNz4_KFe_GgmxMeDuklGh6ln-bDpPjZk0vViCrabfTRNC8q9v4hAPs/exec',
     DEFAULT_COURTS: 3,
@@ -269,6 +270,7 @@ function showSaveModal() {
     $('#saveDesc').textContent = `${ds} 참석 ${played.length}명의 출석을 저장합니다.`;
     $('#attChips').innerHTML = played.map(p => `<span class="att-chip">${p.name} (${p.gameCount}게임)</span>`).join('');
     $('#modalSave').classList.add('show');
+    checkAttendanceExportedFromSheet();
 }
 
 async function confirmSave() {
@@ -290,6 +292,8 @@ async function confirmSave() {
         _attendanceExported = true;
         refreshAttExportStatus();
         saveState();
+        // 시트에 실제로 반영됐는지 재확인 (지연 반영/실패 등으로 어긋나면 배지 정정)
+        checkAttendanceExportedFromSheet();
     } catch { toast('저장 실패', 'err'); } finally {
         hideLoading();
     }
@@ -1689,6 +1693,36 @@ function checkGameLogExportedFromSheet() {
     });
 }
 
+/**
+ * 구글시트 '출석기록' 탭을 직접 조회해 오늘 날짜 출석이 실제로 저장돼 있는지 확인.
+ * 시트에서 오늘자 행을 지워도 로컬 _attendanceExported가 그대로 남아 배지가 어긋나는 문제를 막기 위해,
+ * 조회 결과로 _attendanceExported를 오늘자 실제 시트 상태로 교체하고 배지를 갱신한다.
+ */
+function checkAttendanceExportedFromSheet() {
+    return new Promise((resolve) => {
+        if (!CONFIG.SHEET_ID) { resolve(null); return; }
+        const cb = '_att_cb_' + Date.now();
+        const to = setTimeout(() => { delete window[cb]; sc.remove(); resolve(null); }, 8000);
+        window[cb] = function(r) {
+            clearTimeout(to); delete window[cb]; sc.remove();
+            try {
+                const rows = r?.table?.rows || [];
+                const today = todayStr();
+                const found = rows.some(row => gvizCellDateStr((row.c || [])[0]) === today);
+                _attendanceExported = found;
+                refreshAttExportStatus();
+                saveState();
+                resolve(found);
+            } catch (e) { resolve(null); }
+        };
+        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=responseHandler:${cb}&sheet=${encodeURIComponent(CONFIG.ATT_LOG_TAB)}`;
+        const sc = document.createElement('script');
+        sc.src = url;
+        sc.onerror = () => { clearTimeout(to); delete window[cb]; sc.remove(); resolve(null); };
+        document.head.appendChild(sc);
+    });
+}
+
 /** 시트에 저장된 상태 JSON을 삭제 (운동 종료 시 사용 — 안 지우면 새로고침 시 시트에서 되살아남) */
 async function clearStateFromSheet() {
     if (!CONFIG.APPS_SCRIPT_URL) return;
@@ -1834,6 +1868,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         applyRuleUI();
         renderAll();
         checkGameLogExportedFromSheet();
+        checkAttendanceExportedFromSheet();
         toast('이전 데이터를 복원했습니다', 'ok');
     } else {
         setAttExportStatus(false);
