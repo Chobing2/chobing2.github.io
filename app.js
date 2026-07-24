@@ -145,6 +145,12 @@ function refreshGameExportStatus() {
     setGameExportStatus(done);
 }
 
+// 출석 대상 인원이 없으면(게임 참여자 0명) 내보냈던 기록이 있어도 N으로 표시
+function refreshAttExportStatus() {
+    const hasAttendance = S.players.some(p => p.gameCount > 0);
+    setAttExportStatus(hasAttendance && _attendanceExported);
+}
+
 // 매칭 기록용 키 생성 (4명 id 정렬)
 function matchKey(ids) { return [...ids].sort().join(','); }
 
@@ -282,7 +288,7 @@ async function confirmSave() {
         await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'saveAttendance',date:ds,players:played.map(p=>({name:p.name,level:p.level,gender:p.gender,gameCount:p.gameCount}))}) });
         toast('출석 저장 완료!', 'ok');
         _attendanceExported = true;
-        setAttExportStatus(true);
+        refreshAttExportStatus();
         saveState();
     } catch { toast('저장 실패', 'err'); } finally {
         hideLoading();
@@ -1024,7 +1030,7 @@ function addToQueue(teamA, teamB, type) {
 function removeFromQueue(gid) { S.queue = S.queue.filter(g => g.id !== gid); renderAll(); }
 
 // ============ RENDERING ============
-function renderAll() { renderCourts(); renderPlayers(); renderQueue(); renderPreview(); if (courtsCollapsed) renderCourtsSummary(); refreshGameExportStatus(); saveState(); }
+function renderAll() { renderCourts(); renderPlayers(); renderQueue(); renderPreview(); if (courtsCollapsed) renderCourtsSummary(); refreshGameExportStatus(); refreshAttExportStatus(); saveState(); }
 
 function renderCourts() {
     const el = $('#courtsRow');
@@ -1425,7 +1431,7 @@ async function exportAttendanceToSheet() {
         };
         await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
         _attendanceExported = true;
-        setAttExportStatus(true);
+        refreshAttExportStatus();
         saveState();
         toast(`출석 ${played.length}명 시트 내보내기 완료!`, 'ok');
     } catch(e) {
