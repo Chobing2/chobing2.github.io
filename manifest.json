@@ -1,0 +1,16 @@
+{
+  "name": "버티컬 배드민턴 매칭",
+  "short_name": "버티컬",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef0f4",
+  "theme_color": "#1f8a5f",
+  "lang": "ko",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
